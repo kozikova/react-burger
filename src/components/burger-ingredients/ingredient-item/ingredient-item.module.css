@@ -1,0 +1,17 @@
+.cart {
+    position: relative;
+    composes: mt-6 ml-4 mr-2 mb-2 from global;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;    
+}
+
+.price {   
+    display: flex;
+    flex-direction: row;    
+}
+
+.price > svg {
+    margin: 4px;
+}

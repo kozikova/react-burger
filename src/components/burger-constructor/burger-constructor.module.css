@@ -1,0 +1,32 @@
+.layout {
+    width: 600px;
+    padding-top: 100px;
+    padding-right: 16px;
+    padding-left: 16px;
+    margin-bottom: 40px;
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.y_scrollable {
+    height: 620px;
+    overflow-y: auto;
+}
+
+.total > svg {
+    margin: 4px;
+    height: 36px;
+    width: 36px;
+}
+
+.footer {
+    display: flex;
+    justify-content: end;
+    column-gap: 40px;
+}
+
+.total {
+    display: flex;
+    flex-direction: row;    
+}

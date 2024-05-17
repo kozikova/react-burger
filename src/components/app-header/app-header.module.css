@@ -1,0 +1,38 @@
+.app_header {
+    background-color: #1C1C21;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;    
+}
+
+.nav {   
+    display: flex;
+    flex-direction: row;     
+}
+
+.box_top_bottom {
+    composes: ml-1 mr-1 mb-4 mt-4 from global; 
+}
+
+.menu_button {
+    composes: p-5 from global;
+    composes: box_top_bottom;
+    display: flex;
+    flex-direction: row;
+    background-color: #1C1C21;
+    border: none;
+    outline: none;
+    color: var(--theme-ui-colors-text, #F5F6F7);
+}
+
+ .app_header > .box_top_bottom, 
+ .app_header > .menu_button,
+ .app_header > .nav {
+    flex: 1 0 0;
+}
+
+
+.label {
+    composes: text text_type_main-default pl-2 from global;
+}

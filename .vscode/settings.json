@@ -1,0 +1,8 @@
+{
+    "scss.lint.validProperties": [
+        "composes"
+    ],
+    "css.lint.validProperties": [
+        "composes"
+    ]
+}
