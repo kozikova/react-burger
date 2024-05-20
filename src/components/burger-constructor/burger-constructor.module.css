@@ -1,0 +1,50 @@
+.layout {
+    width: 600px;
+    padding-top: 84px;
+    padding-right: 16px;
+    padding-left: 16px;
+    margin-bottom: 40px;
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.constructor_y_scrollable {
+    height: 500px;
+    overflow-y: auto;
+}
+
+.dragable {
+    composes: mt-4 ml-4 mr-4 from global;
+    display: flex;
+    flex-direction: row;
+    align-items: center;  
+    gap: 8px;  
+}
+
+
+.total > svg {
+    margin: 4px;
+    height: 36px;
+    width: 36px;
+}
+
+.footer {
+    display: flex;
+    justify-content: end;
+    column-gap: 40px;
+}
+
+.total {
+    display: flex;
+    flex-direction: row;    
+}
+
+.bun_container {
+    padding-left: 50px;
+    padding-right: 18px;
+}
+
+.without_padding {
+    padding-left: 0;
+}

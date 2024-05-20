@@ -1,0 +1,9 @@
+.layout {
+    width: 600px;
+}
+
+.y_scrollable {
+    height: 670px;
+    overflow-y: auto;
+}
+

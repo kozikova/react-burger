@@ -1,0 +1,5 @@
+.ingredients_grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(250px, max-content));
+    padding-inline-start: 0;
+}
