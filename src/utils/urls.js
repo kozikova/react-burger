@@ -1,1 +1,1 @@
-export const normaApi = 'https://norma.nomoreparties.space/api'
+export const normaApi = "https://norma.nomoreparties.space/api";
