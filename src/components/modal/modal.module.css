@@ -4,12 +4,12 @@
     border: 1px solid #4c4cff33;
     display: flex;
     flex-direction: column; 
-    position: absolute;    
+    position: fixed;    
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
-    background-color: #1C1C21;;   
+    background-color: #1C1C21;   
 }
 
 .title_wrapper {
@@ -20,6 +20,9 @@
     justify-content: space-between;
 }
 
-.close-button {
+.close_button {
     cursor: pointer;
+    background-color: #1C1C21;
+    border: none;
+    z-index: 100;
 }

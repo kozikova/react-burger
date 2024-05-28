@@ -11,29 +11,23 @@ function App() {
   const [currentIngredients, setCurrentIngredients] = React.useState(ingredients);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
-  /*const [state, setState] = React.useState({
-    isLoading: false,
-    hasError: false,
-    currentIngredients: [],
-  });*/
 
   React.useEffect(() => {
     setIsLoading(true);
 
-    getIngredientsApi(
-      (currentIngredients: []) => {
-        setCurrentIngredients(currentIngredients);
-        setIsLoading(false);
-      },
-      (e: Error) => {
+    getIngredientsApi()
+      .then((res) => {
+        setCurrentIngredients(res.data);
+      })
+      .catch((e: Error) => {
         console.log(e);
-        setIsLoading(false);
         setIsError(true);
-      }
-    );
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
-  //const { currentIngredients, isLoading, hasError } = state;
   return (
     <div className={styles.page}>
       <AppHeader />

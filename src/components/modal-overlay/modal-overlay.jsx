@@ -9,11 +9,13 @@ export default function ModalOverlay(props) {
     }
   };
 
-  React.useEffect(() => {
-    document.getElementById("closeLayout").addEventListener("click", onOverlayClick, false);
-  }, []);
-
-  return <div id="closeLayout" className={modalOverlayStyles.half_transparent_overlay} />;
+  return (
+    <div
+      id="closeLayout"
+      onClick={onOverlayClick}
+      className={modalOverlayStyles.half_transparent_overlay}
+    />
+  );
 }
 
 ModalOverlay.propTypes = {
