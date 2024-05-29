@@ -1,0 +1,33 @@
+.info_item {
+    composes: text_type_main-default text_color_inactive from global;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+}
+
+.ingredient_details_wrapper {
+    height: 495px;
+    width: 520px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+}
+
+.info_wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; 
+    width: 100%; 
+    gap: 8px;
+}
+
+.ingredient_image {
+    width: 480px;
+    height: 240px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 16px;
+}

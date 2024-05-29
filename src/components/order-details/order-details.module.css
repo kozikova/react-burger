@@ -1,0 +1,13 @@
+.order_wrapper {
+    height: 560px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+}
+
+.order_wrapper > svg {
+    margin-top: 60px;
+    height: 100px;
+    width: 100px;
+}

@@ -9,7 +9,7 @@ export default function IngredientGroup(props) {
       <p className="text text_type_main-default mt-10">{props.categoryName}</p>
       <ul className={groupStyles.ingredients_grid}>
         {props.list.map((item) => (
-          <IngredientItem info={item} key={item._id} />
+          <IngredientItem info={item} key={item._id} onClick={props.onItemClick} />
         ))}
       </ul>
     </div>
@@ -19,4 +19,5 @@ export default function IngredientGroup(props) {
 IngredientGroup.propTypes = {
   categoryName: PropTypes.string,
   list: PropTypes.arrayOf(ingredientType.isRequired).isRequired,
+  onItemClick: PropTypes.func.isRequired,
 };
