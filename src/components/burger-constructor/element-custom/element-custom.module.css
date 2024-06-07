@@ -1,6 +1,7 @@
 .bun_container {
     padding-left: 50px;
     padding-right: 18px;
+    list-style-type: none;
 }
 
 .bun_empty {

@@ -70,7 +70,7 @@ export const ElementCustom = ({
   };
 
   return elementType === "bun" ? (
-    <div
+    <li
       className={`${
         bun ? elementStyles.bun_container : elementStyles.bun_empty
       }`}
@@ -86,9 +86,9 @@ export const ElementCustom = ({
         price={bun?.price}
         thumbnail={bun?.image_mobile}
       />
-    </div>
+    </li>
   ) : (
-    <div
+    <li
       ref={ref}
       data-handler-id={handlerId}
       className={`${
@@ -107,7 +107,7 @@ export const ElementCustom = ({
         thumbnail={item?.image_mobile}
         handleClose={handleClose}
       />
-    </div>
+    </li>
   );
 };
 

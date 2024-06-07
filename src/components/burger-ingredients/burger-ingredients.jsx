@@ -14,7 +14,6 @@ export default function BurgerIngredients() {
   const ingredients = useSelector(
     (store) => store.ingredients.ingredients
   );
-  //const countObject = useSelector(getIngredientCounts);
 
   const [current, setCurrent] = React.useState("bun");
   const { isModalOpen, openModal, closeModal } = useModal();
