@@ -1,0 +1,35 @@
+.bun_container {
+    padding-left: 50px;
+    padding-right: 18px;
+}
+
+.bun_empty {
+    composes: bun_container;
+}
+
+.item_dragable {
+    composes: mt-4 ml-4 mr-4 mb-4 from global;
+    display: flex;
+    flex-direction: row;
+    align-items: center;  
+    gap: 8px;  
+}
+
+.item_dragable_opacity {
+    composes: item_dragable;
+    opacity: .4; 
+}
+
+.item_empty {
+    composes: item_dragable;
+}
+
+.item_empty > div > span > :not(:nth-child(2)) {
+    display: none;
+} 
+
+.bun_empty > div > span > :not(:nth-child(2)) {
+    display: none;
+} 
+    
+   
