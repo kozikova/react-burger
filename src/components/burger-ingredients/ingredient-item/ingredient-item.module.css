@@ -6,7 +6,12 @@
     justify-content: start;
     align-items: center;    
     overflow: hidden;
-    cursor: pointer;
+    cursor: pointer;    
+}
+
+.cart_opacity {
+    composes: cart;
+    opacity: .4
 }
 
 .price {   

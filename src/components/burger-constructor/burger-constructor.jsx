@@ -1,94 +1,141 @@
 import React from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
-  ConstructorElement,
   CurrencyIcon,
-  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import constructorStyles from "./burger-constructor.module.css";
 import { useModal } from "../../hooks/useModal";
-import PropTypes from "prop-types";
-import ingredientType from "../../utils/types";
+import {
+  addBun,
+  addItem,
+  deleteItem,
+  clear,
+  total,
+} from "../../services/burgerConstructor";
+import { postOrder } from "../../services/orderDetails";
+import { ElementCustom } from "./element-custom/element-custom";
+import { useDrop } from "react-dnd";
 
-export default function BurgerConstructor(props) {
+export default function BurgerConstructor() {
   const { isModalOpen, openModal, closeModal } = useModal();
+  const dispatch = useDispatch();
+  const bun = useSelector((store) => store.burgerConstructor.bun);
+  const items = useSelector((store) => store.burgerConstructor.items);
+  const { loading, error, orderFromApi } = useSelector(
+    (state) => state.orderDetails
+  );
 
-  const getNewTotal = React.useMemo(() => {
-    return props.selectedList.reduce(
-      (prevValue, currentValue) => prevValue + currentValue.price,
-      0
+  useEffect(() => {
+    dispatch(total());
+  }, [dispatch, bun, items]);
+
+  const getNewTotal = useSelector(
+    (store) => store.burgerConstructor.totalPrice
+  );
+
+  const [, dropTargetRef] = useDrop({
+    accept: "dndContainer",
+    drop: (item) => dropDispachActions(item),
+    collect(monitor) {
+      return { isOver: monitor.isOver() };
+    },
+  });
+
+  const dropDispachActions = (item) => {
+    if (item.type === "bun") {
+      dispatch(addBun(item));
+    } else {
+      dispatch(addItem(item));
+    }
+  };
+
+  const onDeleteItem = (key) => {
+    dispatch(deleteItem(key));
+  };
+
+  const postAndOpenOrder = () => {
+    dispatch(
+      postOrder([bun._id, ...items.map((item) => item._id), bun?._id])
     );
-  }, [props.selectedList]);
+    openModal();
+  };
 
-  const buns = React.useMemo(() => {
-    return props.selectedList.filter((item) => item.type === "bun");
-  }, [props.selectedList]);
-
-  const notBuns = React.useMemo(() => {
-    return props.selectedList.filter((item) => item.type !== "bun");
-  }, [props.selectedList]);
+  const closeAndClearOrder = () => {
+    dispatch(clear());
+    closeModal();
+  };
 
   return (
     <div className={constructorStyles.layout}>
-      <ul className={constructorStyles.without_padding}>
-        {buns.slice(0, 1).map((item) => (
-          <div className={constructorStyles.bun_container} key={item._id}>
-            <ConstructorElement
-              type="top"
-              isLocked={true}
-              text={item.name + "(верх)"}
-              price={item.price}
-              thumbnail={item.image_mobile}
-            />
-          </div>
-        ))}
+      <ul
+        ref={dropTargetRef}
+        className={constructorStyles.without_padding}
+      >
+        <ElementCustom
+          bun={bun}
+          item={null}
+          type={"top"}
+          elementType={"bun"}
+        />
         <div className={constructorStyles.constructor_y_scrollable}>
-          {notBuns.map((item) => (
-            <div className={constructorStyles.dragable} key={item._id}>
-              <DragIcon type="primary" />
-              <ConstructorElement
-                key={item._id}
-                text={item.name}
-                price={item.price}
-                thumbnail={item.image_mobile}
+          {items.length ? (
+            items.map((item, index) => (
+              <ElementCustom
+                bun={null}
+                item={item}
+                key={item.key}
+                type={null}
+                elementType={"item"}
+                deleteItem={onDeleteItem}
+                index={index}
               />
-            </div>
-          ))}
-        </div>
-        {buns.slice(0, 1).map((item) => (
-          <div className={constructorStyles.bun_container} key={item._id}>
-            <ConstructorElement
-              key={item._id}
-              type="bottom"
-              isLocked={true}
-              text={item.name + " (низ)"}
-              price={item.price}
-              thumbnail={item.image_mobile}
+            ))
+          ) : (
+            <ElementCustom
+              bun={null}
+              item={null}
+              type={null}
+              elementType={"item"}
             />
-          </div>
-        ))}
+          )}
+        </div>
+
+        <ElementCustom
+          bun={bun}
+          item={null}
+          type={"bottom"}
+          elementType={"bun"}
+        />
       </ul>
       <div className={constructorStyles.footer}>
         <div className={constructorStyles.total}>
           <p className="m-1 text_type_main-large">{getNewTotal}</p>
           <CurrencyIcon type="primary" />
         </div>
-
-        <Button htmlType="button" type="primary" size="large" onClick={openModal}>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={postAndOpenOrder}
+        >
           Оформить заказ
         </Button>
         {isModalOpen && (
-          <Modal title="" onClose={closeModal}>
-            <OrderDetails />
+          <Modal title="" onClose={closeAndClearOrder}>
+            <div>
+              {loading && "Загрузка..."}
+              {!loading && error && <p>Ошибка: {error}</p>}
+              {!loading && !error && orderFromApi.success && (
+                <OrderDetails />
+              )}
+            </div>
           </Modal>
         )}
       </div>
     </div>
   );
 }
-
-BurgerConstructor.propTypes = {
-  selectedList: PropTypes.arrayOf(ingredientType.isRequired).isRequired,
-};

@@ -2,14 +2,22 @@ import groupStyles from "./ingredient-group.module.css";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import PropTypes from "prop-types";
 import ingredientType from "../../../utils/types";
+import { getIngredientCounts } from "../../../services/burgerConstructor";
+import { useSelector } from "react-redux";
 
 export default function IngredientGroup(props) {
+  const countObject = useSelector(getIngredientCounts);
+
   return (
     <div className={groupStyles.layout}>
-      <p className="text text_type_main-default mt-10">{props.categoryName}</p>
       <ul className={groupStyles.ingredients_grid}>
         {props.list.map((item) => (
-          <IngredientItem info={item} key={item._id} onClick={props.onItemClick} />
+          <IngredientItem
+            onClick={props.onItemClick}
+            info={item}
+            key={item._id}
+            count={countObject[item._id]}
+          />
         ))}
       </ul>
     </div>
@@ -17,7 +25,6 @@ export default function IngredientGroup(props) {
 }
 
 IngredientGroup.propTypes = {
-  categoryName: PropTypes.string,
   list: PropTypes.arrayOf(ingredientType.isRequired).isRequired,
   onItemClick: PropTypes.func.isRequired,
 };
