@@ -11,9 +11,7 @@ import PropTypes from "prop-types";
 
 export default function BurgerIngredients() {
   const dispatch = useDispatch();
-  const ingredients = useSelector(
-    (store) => store.ingredients.ingredients
-  );
+  const ingredients = useSelector((store) => store.ingredients.ingredients);
 
   const [current, setCurrent] = React.useState("bun");
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -34,20 +32,16 @@ export default function BurgerIngredients() {
   };
 
   const setActiveTab = () => {
-    const scrollableAreaTop =
-      scrollAreaRef.current.getBoundingClientRect().top;
+    const scrollableAreaTop = scrollAreaRef.current.getBoundingClientRect().top;
 
     const bun = Math.abs(
-      bunTitle.current.getBoundingClientRect().bottom -
-        scrollableAreaTop
+      bunTitle.current.getBoundingClientRect().bottom - scrollableAreaTop
     );
     const sauce = Math.abs(
-      sauceTitle.current.getBoundingClientRect().bottom -
-        scrollableAreaTop
+      sauceTitle.current.getBoundingClientRect().bottom - scrollableAreaTop
     );
     const main = Math.abs(
-      mainTitle.current.getBoundingClientRect().bottom -
-        scrollableAreaTop
+      mainTitle.current.getBoundingClientRect().bottom - scrollableAreaTop
     );
 
     if (bun < sauce && bun < main) {
@@ -61,29 +55,15 @@ export default function BurgerIngredients() {
 
   return (
     <div className={ingredientsStyles.layout}>
-      <p className="text text_type_main-medium pt-10 pb-5">
-        Соберите бургер
-      </p>
+      <p className="text text_type_main-medium pt-10 pb-5">Соберите бургер</p>
       <div className="wrapper-columns">
-        <Tab
-          value="bun"
-          active={current === "bun"}
-          onClick={setCurrent}
-        >
+        <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
           Булки
         </Tab>
-        <Tab
-          value="sauce"
-          active={current === "sauce"}
-          onClick={setCurrent}
-        >
+        <Tab value="sauce" active={current === "sauce"} onClick={setCurrent}>
           Соусы
         </Tab>
-        <Tab
-          value="main"
-          active={current === "main"}
-          onClick={setCurrent}
-        >
+        <Tab value="main" active={current === "main"} onClick={setCurrent}>
           Начинки
         </Tab>
       </div>
@@ -92,10 +72,7 @@ export default function BurgerIngredients() {
         ref={scrollAreaRef}
         onScroll={setActiveTab}
       >
-        <p
-          className="text text_type_main-default mt-10"
-          ref={bunTitle}
-        >
+        <p className="text text_type_main-default mt-10" ref={bunTitle}>
           Булки
         </p>
         <IngredientGroup
@@ -104,10 +81,7 @@ export default function BurgerIngredients() {
           })}
           onItemClick={onItemClick}
         />
-        <p
-          className="text text_type_main-default mt-10"
-          ref={sauceTitle}
-        >
+        <p className="text text_type_main-default mt-10" ref={sauceTitle}>
           Соусы
         </p>
         <IngredientGroup
@@ -116,10 +90,7 @@ export default function BurgerIngredients() {
           })}
           onItemClick={onItemClick}
         />
-        <p
-          className="text text_type_main-default mt-10"
-          ref={mainTitle}
-        >
+        <p className="text text_type_main-default mt-10" ref={mainTitle}>
           Начинки
         </p>
         <IngredientGroup
@@ -129,11 +100,11 @@ export default function BurgerIngredients() {
           onItemClick={onItemClick}
         />
       </ul>
-      {isModalOpen && (
+      {/* {isModalOpen && (
         <Modal title="Детали ингредиента" onClose={onItemClose}>
           <IngredientDetails />
         </Modal>
-      )}
+      )} */}
     </div>
   );
 }
