@@ -1,0 +1,19 @@
+.footer {
+    composes: mt-20 text text_type_main-default text_color_inactive from global;
+}
+
+.wrapper {
+    display: flex;
+    padding-top: 120px;
+    justify-content: center;
+    column-gap: 60px;
+  }
+
+  .link {
+    composes: text text_type_main-medium text_color_inactive ml-16 from global;
+    text-decoration: none;   
+  }
+  
+  .active {
+    color: var(--theme-ui-colors-text, #F5F6F7)
+  }
