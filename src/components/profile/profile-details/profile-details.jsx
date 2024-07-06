@@ -46,9 +46,7 @@ export const ProfileDetails = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      patchUserAction(profileState.name, profileState.email, profileState.password)
-    );
+    dispatch(patchUserAction(profileState));
   };
 
   const onEmailChange = (e) => {
@@ -88,16 +86,16 @@ export const ProfileDetails = () => {
         name={"password"}
         icon="EditIcon"
       />
-      buttonVisible && (
-      <div className={profileDetailsStyles.row}>
-        <Button onClick={onCancel} htmlType="button" type="secondary" size="medium">
-          Отмена
-        </Button>
-        <Button htmlType="submit" type="primary" size="medium">
-          Сохранить
-        </Button>
-      </div>
-      )
+      {buttonVisible && (
+        <div className={profileDetailsStyles.row}>
+          <Button onClick={onCancel} htmlType="button" type="secondary" size="medium">
+            Отмена
+          </Button>
+          <Button htmlType="submit" type="primary" size="medium">
+            Сохранить
+          </Button>
+        </div>
+      )}
     </form>
   );
 };

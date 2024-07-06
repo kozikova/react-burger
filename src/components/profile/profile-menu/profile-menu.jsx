@@ -9,27 +9,41 @@ export function ProfileMenu() {
   const navigate = useNavigate();
 
   const onLogout = () => {
-    dispatch(logoutAction);
+    dispatch(logoutAction());
     navigate("/login");
   };
 
   return (
     <div className={styles.wrapper}>
       <NavLink
-        className={({ isActive }) =>
-          `${styles.inactive} ${isActive ? styles.active : ""}`
-        }
-        to="profile"
+        className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ""}`}
+        to=""
         end
       >
-        Профиль
+        {({ isActive }) => (
+          <span
+            className={({ isActive }) =>
+              `${styles.link} ${isActive ? styles.active : ""}`
+            }
+          >
+            Профиль
+          </span>
+        )}
       </NavLink>
       <NavLink
         className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ""}`}
         to="orders"
         end
       >
-        История заказов
+        {({ isActive }) => (
+          <span
+            className={({ isActive }) =>
+              `${styles.link} ${isActive ? styles.active : ""}`
+            }
+          >
+            История заказов
+          </span>
+        )}
       </NavLink>
       <button className={`${styles.link} ${styles.button}`} onClick={onLogout}>
         Выход

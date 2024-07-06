@@ -28,9 +28,8 @@ function Login() {
 
   const onSubmitLogin = (e) => {
     e.preventDefault();
-    dispatch(loginAction({ email, password })).then(() =>
-      navigate(state ? state.from : "/")
-    );
+    dispatch(loginAction({ email, password }));
+    navigate(state ? state.from : "/");
   };
 
   return (

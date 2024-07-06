@@ -13,8 +13,8 @@ export default function AppHeader() {
       <nav className={appHeaderStyles.nav}>
         <NavLink to="/" className={appHeaderStyles.menu_button}>
           {({ isActive }) => (
-            <button type="button" className={appHeaderStyles.menu_button}>
-              <BurgerIcon type="primary" />
+            <>
+              <BurgerIcon type={isActive ? `primary` : `secondary`} />
               <p
                 className={
                   isActive
@@ -24,13 +24,13 @@ export default function AppHeader() {
               >
                 Конструктор
               </p>
-            </button>
+            </>
           )}
         </NavLink>
         <NavLink to="/feed" className={appHeaderStyles.menu_button}>
           {({ isActive }) => (
-            <button type="button" className={appHeaderStyles.menu_button}>
-              <ListIcon type="secondary" />
+            <>
+              <ListIcon type={isActive ? `primary` : `secondary`} />
               <p
                 className={
                   isActive
@@ -40,15 +40,15 @@ export default function AppHeader() {
               >
                 Лента заказов
               </p>
-            </button>
+            </>
           )}
         </NavLink>
       </nav>
       <Logo className={appHeaderStyles.box_top_bottom} />
       <NavLink to="/profile" className={appHeaderStyles.menu_button}>
         {({ isActive }) => (
-          <button type="button" className={appHeaderStyles.menu_button}>
-            <ProfileIcon type="secondary" />
+          <>
+            <ProfileIcon type={isActive ? `primary` : `secondary`} />
             <p
               className={
                 isActive
@@ -58,7 +58,7 @@ export default function AppHeader() {
             >
               Личный кабинет
             </p>
-          </button>
+          </>
         )}
       </NavLink>
     </header>

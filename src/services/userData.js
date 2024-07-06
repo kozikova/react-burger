@@ -28,24 +28,18 @@ export const logoutAction = createAsyncThunk("user/logout", async () => {
   return await logoutApi();
 });
 
-export const patchUserAction = createAsyncThunk(
-  "user/patchUser",
-  async (name, email, password) => {
-    return await patchUser(name, email, password);
-  }
-);
+export const patchUserAction = createAsyncThunk("user/patchUser", async (arg) => {
+  return await patchUser(arg);
+});
 
-export const passwordResetAction = createAsyncThunk(
-  "user/passwordReset",
-  async (email) => {
-    return await passwordResetApi(email);
-  }
-);
+export const passwordResetAction = createAsyncThunk("user/passwordReset", async (arg) => {
+  return await passwordResetApi(arg);
+});
 
 export const passwordResetResetAction = createAsyncThunk(
   "user/passwordResetReset",
-  async (password, token) => {
-    return await passwordResetResetApi(password, token);
+  async (arg) => {
+    return await passwordResetResetApi(arg);
   }
 );
 
@@ -75,7 +69,7 @@ export const userSlice = createSlice({
       })
       .addCase(passwordResetResetAction.fulfilled, (state, action) => {
         state.loading = false;
-        state.message = action.payload;
+        state.message = action.payload.message;
       })
       .addCase(passwordResetResetAction.pending, (state, action) => {
         state.loading = true;
@@ -87,7 +81,7 @@ export const userSlice = createSlice({
       })
       .addCase(passwordResetAction.fulfilled, (state, action) => {
         state.loading = false;
-        state.message = action.payload;
+        state.message = action.payload.message;
       })
       .addCase(passwordResetAction.pending, (state, action) => {
         state.loading = true;
@@ -99,7 +93,7 @@ export const userSlice = createSlice({
       })
       .addCase(patchUserAction.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.user = action.payload.user;
       })
       .addCase(patchUserAction.pending, (state, action) => {
         state.loading = true;

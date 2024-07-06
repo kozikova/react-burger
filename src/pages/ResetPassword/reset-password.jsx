@@ -25,16 +25,15 @@ function ResetPassword() {
 
   const onSubmitReset = (e) => {
     e.preventDefault();
-    dispatch(passwordResetResetAction(password, code)).then(() => {
-      navigate("/login");
-    });
+    dispatch(passwordResetResetAction({ password: password, token: code }));
+    localStorage.setItem("resetPassword", false);
+    navigate("/login");
   };
 
   useEffect(() => {
     if (localStorage.getItem("resetPassword") !== "true") {
       navigate("/forgot-password");
     }
-    localStorage.setItem("resetPassword", false);
   }, [navigate]);
 
   return (

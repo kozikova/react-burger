@@ -15,10 +15,9 @@ function ForgotPassword() {
 
   const onSubmitReset = (e) => {
     e.preventDefault();
-    dispatch(passwordResetAction(email)).then(() => {
-      localStorage.setItem("resetPassword", true);
-      navigate("/reset-password");
-    });
+    dispatch(passwordResetAction({ email }));
+    localStorage.setItem("resetPassword", true);
+    navigate("/reset-password");
   };
 
   return (
