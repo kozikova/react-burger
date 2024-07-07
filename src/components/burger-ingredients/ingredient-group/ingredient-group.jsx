@@ -12,12 +12,7 @@ export default function IngredientGroup(props) {
     <div className={groupStyles.layout}>
       <ul className={groupStyles.ingredients_grid}>
         {props.list.map((item) => (
-          <IngredientItem
-            onClick={props.onItemClick}
-            info={item}
-            key={item._id}
-            count={countObject[item._id]}
-          />
+          <IngredientItem info={item} key={item._id} count={countObject[item._id]} />
         ))}
       </ul>
     </div>
@@ -26,5 +21,4 @@ export default function IngredientGroup(props) {
 
 IngredientGroup.propTypes = {
   list: PropTypes.arrayOf(ingredientType.isRequired).isRequired,
-  onItemClick: PropTypes.func.isRequired,
 };

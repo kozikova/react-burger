@@ -67,14 +67,14 @@ export const ProfileDetails = () => {
         placeholder={"Имя"}
         onChange={onNameChange}
         icon={"EditIcon"}
-        value={profileState?.name}
+        value={profileState?.name || ""}
         name={"name"}
         size={"default"}
         extraClass="mb-6"
       />
       <EmailInput
         onChange={onEmailChange}
-        value={profileState?.email}
+        value={profileState?.email || ""}
         name={"email"}
         placeholder="Логин"
         isIcon={true}
@@ -82,7 +82,7 @@ export const ProfileDetails = () => {
       />
       <PasswordInput
         onChange={onPasswordChange}
-        value={profileState?.password}
+        value={profileState?.password || ""}
         name={"password"}
         icon="EditIcon"
       />

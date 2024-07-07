@@ -71,26 +71,30 @@ export default function BurgerConstructor() {
   return (
     <div className={constructorStyles.layout}>
       <ul ref={dropTargetRef} className={constructorStyles.without_padding}>
-        <ElementCustom bun={bun} item={null} type={"top"} elementType={"bun"} />
+        <ElementCustom bun={bun} item={null} typeIsTop={true} bunOrMainType={true} />
         <div className={constructorStyles.constructor_y_scrollable}>
           {items.length ? (
             items.map((item, index) => (
               <ElementCustom
                 bun={null}
                 item={item}
-                key={item.key}
-                type={null}
-                elementType={"item"}
+                typeIsTop={null}
+                bunOrMainType={false}
                 deleteItem={onDeleteItem}
                 index={index}
               />
             ))
           ) : (
-            <ElementCustom bun={null} item={null} type={null} elementType={"item"} />
+            <ElementCustom
+              bun={null}
+              item={null}
+              typeIsTop={null}
+              bunOrMainType={false}
+            />
           )}
         </div>
 
-        <ElementCustom bun={bun} item={null} type={"bottom"} elementType={"bun"} />
+        <ElementCustom bun={bun} item={null} type={false} bunOrMainType={true} />
       </ul>
       <div className={constructorStyles.footer}>
         <div className={constructorStyles.total}>

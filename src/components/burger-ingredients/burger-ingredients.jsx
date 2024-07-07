@@ -6,7 +6,6 @@ import { useModal } from "../../hooks/useModal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import IngredientGroup from "./ingredient-group/ingredient-group";
-import { open, close } from "../../services/ingredientDetails";
 import PropTypes from "prop-types";
 
 export default function BurgerIngredients() {
@@ -20,16 +19,6 @@ export default function BurgerIngredients() {
   const bunTitle = React.useRef();
   const sauceTitle = React.useRef();
   const mainTitle = React.useRef();
-
-  const onItemClick = (item) => {
-    dispatch(open(item));
-    openModal();
-  };
-
-  const onItemClose = (item) => {
-    dispatch(close());
-    closeModal();
-  };
 
   const setActiveTab = () => {
     const scrollableAreaTop = scrollAreaRef.current.getBoundingClientRect().top;
@@ -79,7 +68,6 @@ export default function BurgerIngredients() {
           list={ingredients.filter((item) => {
             return item.type === "bun";
           })}
-          onItemClick={onItemClick}
         />
         <p className="text text_type_main-default mt-10" ref={sauceTitle}>
           Соусы
@@ -88,7 +76,6 @@ export default function BurgerIngredients() {
           list={ingredients.filter((item) => {
             return item.type === "sauce";
           })}
-          onItemClick={onItemClick}
         />
         <p className="text text_type_main-default mt-10" ref={mainTitle}>
           Начинки
@@ -97,14 +84,8 @@ export default function BurgerIngredients() {
           list={ingredients.filter((item) => {
             return item.type === "main";
           })}
-          onItemClick={onItemClick}
         />
       </ul>
-      {/* {isModalOpen && (
-        <Modal title="Детали ингредиента" onClose={onItemClose}>
-          <IngredientDetails />
-        </Modal>
-      )} */}
     </div>
   );
 }

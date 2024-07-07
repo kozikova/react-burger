@@ -16,9 +16,6 @@ export default function IngredientItem(props) {
   const location = useLocation();
 
   const ingredientId = props.info["_id"];
-  const onClick = () => {
-    props.onClick(props.info);
-  };
 
   const [{ isDragging }, dragRef] = useDrag({
     type: "dndContainer",
@@ -56,7 +53,5 @@ export default function IngredientItem(props) {
 
 IngredientItem.propTypes = {
   info: ingredientType.isRequired,
-  type: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
   count: PropTypes.number,
 };
