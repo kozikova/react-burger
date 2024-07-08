@@ -68,10 +68,10 @@ export const ElementCustom = ({
   return bunOrMainType ? (
     <li
       className={`${bun ? elementStyles.bun_container : elementStyles.bun_empty}`}
-      key={bun?._id + (typeIsTop ? "(верх)" : "(низ)")}
+      key={(bun ? bun._id : "") + (typeIsTop ? "(верх)" : "(низ)")}
     >
       <ConstructorElement
-        type={typeIsTop ? "(верх)" : "(низ)"}
+        type={typeIsTop ? "top" : "bottom"}
         isLocked={true}
         text={bun ? `${bun?.name} ${typeIsTop ? "(верх)" : "(низ)"}` : "Выберите булку"}
         price={bun?.price}
@@ -89,7 +89,7 @@ export const ElementCustom = ({
             : elementStyles.item_dragable
           : elementStyles.item_empty
       }`}
-      key={item?.key}
+      key={item ? item.key : "0"}
     >
       <DragIcon type="primary" />
       <ConstructorElement
@@ -104,7 +104,7 @@ export const ElementCustom = ({
 
 ElementCustom.propTypes = {
   bun: ingredientType,
-  item: ingredientTypeWithKey,
+  item: ingredientType,
   typeIsTop: PropTypes.bool,
   bunOrMainType: PropTypes.bool,
   deleteItem: PropTypes.func,

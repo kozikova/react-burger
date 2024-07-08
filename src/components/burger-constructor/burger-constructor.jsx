@@ -82,6 +82,7 @@ export default function BurgerConstructor() {
                 bunOrMainType={false}
                 deleteItem={onDeleteItem}
                 index={index}
+                key={item?.key}
               />
             ))
           ) : (
@@ -90,6 +91,7 @@ export default function BurgerConstructor() {
               item={null}
               typeIsTop={null}
               bunOrMainType={false}
+              key={"0"}
             />
           )}
         </div>
