@@ -4,9 +4,7 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import ingredientType, {
-  ingredientTypeWithKey,
-} from "../../../utils/types";
+import ingredientType, { ingredientTypeWithKey } from "../../../utils/types";
 import { useDrag, useDrop } from "react-dnd";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -16,9 +14,8 @@ import { v4 as uuidv4 } from "uuid";
 export const ElementCustom = ({
   bun,
   item,
-  key,
-  type,
-  elementType,
+  typeIsTop,
+  bunOrMainType,
   deleteItem,
   index,
 }) => {
@@ -38,8 +35,7 @@ export const ElementCustom = ({
       if (dragIndex === hoverIndex) return;
 
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      const hoverMiddleY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
@@ -57,7 +53,7 @@ export const ElementCustom = ({
 
   const [{ isDragging }, drag] = useDrag({
     type: "sortable",
-    item: () => ({ key, index }),
+    item: () => ({ key: item?.key, index }),
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),
@@ -69,20 +65,15 @@ export const ElementCustom = ({
     deleteItem(item?.key);
   };
 
-  return elementType === "bun" ? (
+  return bunOrMainType ? (
     <li
-      className={`${
-        bun ? elementStyles.bun_container : elementStyles.bun_empty
-      }`}
+      className={`${bun ? elementStyles.bun_container : elementStyles.bun_empty}`}
+      key={(bun ? bun._id : "") + (typeIsTop ? "(верх)" : "(низ)")}
     >
       <ConstructorElement
-        type={type}
+        type={typeIsTop ? "top" : "bottom"}
         isLocked={true}
-        text={
-          bun
-            ? `${bun?.name} ${type === "top" ? "(верх)" : "(низ)"}`
-            : "Выберите булку"
-        }
+        text={bun ? `${bun?.name} ${typeIsTop ? "(верх)" : "(низ)"}` : "Выберите булку"}
         price={bun?.price}
         thumbnail={bun?.image_mobile}
       />
@@ -98,7 +89,7 @@ export const ElementCustom = ({
             : elementStyles.item_dragable
           : elementStyles.item_empty
       }`}
-      key={key}
+      key={item ? item.key : "0"}
     >
       <DragIcon type="primary" />
       <ConstructorElement
@@ -113,10 +104,9 @@ export const ElementCustom = ({
 
 ElementCustom.propTypes = {
   bun: ingredientType,
-  item: ingredientTypeWithKey,
-  type: PropTypes.string,
-  elementType: PropTypes.string,
+  item: ingredientType,
+  typeIsTop: PropTypes.bool,
+  bunOrMainType: PropTypes.bool,
   deleteItem: PropTypes.func,
   index: PropTypes.number,
-  key: (PropTypes.string = uuidv4()),
 };

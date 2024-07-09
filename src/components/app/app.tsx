@@ -1,41 +1,76 @@
 import React from "react";
 import AppHeader from "./../app-header/app-header";
 import styles from "./app.module.css";
-import BurgerConstructor from "./../burger-constructor/burger-constructor";
-import BurgerIngredients from "./../burger-ingredients/burger-ingredients";
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import Home from "./../../pages/Home/home";
+import Login from "./../../pages/Login/login";
+import Profile from "./../../pages/Profile/profile";
+import Modal from "../modal/modal";
+import IngredientDetails from "./../ingredient-details/ingredient-details";
 import { getIngredients } from "../../services/burgerIngredients";
-import ingredientType from "./../../utils/types";
-import { useDispatch, useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { useAppSelector } from "../../hooks/useAppSelector";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import Register from "../../pages/Register/register";
+import ForgotPassword from "../../pages/ForgotPassword/forgot-password";
+import ResetPassword from "../../pages/ResetPassword/reset-password";
+import NotFound from "../../pages/NotFound/not-found";
+import { ProfileOrders } from "../profile/profile-orders/profile-orders";
+import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
+import { ProfileDetails } from "../profile/profile-details/profile-details";
+import { authUser } from "../../services/userData";
 
 function App() {
-  const dispatch = useAppDispatch();
-  const { loading, error, ingredients } = useAppSelector(
-    (state) => state.ingredients
-  );
+  const appDispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const background = location.state && location.state.background;
 
   React.useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
+    appDispatch(getIngredients());
+    appDispatch(authUser());
+  }, [appDispatch]);
+
+  const onItemClose = () => {
+    navigate(-1);
+  };
 
   return (
     <div className={styles.page}>
       <AppHeader />
-      <main>
-        {loading && "Загрузка..."}
-        {!loading && error && <p>Ошибка: {error}</p>}
-        {!loading && !error && ingredients.length && (
-          <section className="wrapper-columns-center">
-            <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </DndProvider>
-          </section>
-        )}
-      </main>
+      <Routes location={background || location}>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<OnlyUnAuth component={<Login />} />} />
+        <Route path="/register" element={<OnlyUnAuth component={<Register />} />} />
+        <Route
+          path="/forgot-password"
+          element={<OnlyUnAuth component={<ForgotPassword />} />}
+        />
+        <Route
+          path="/reset-password"
+          element={<OnlyUnAuth component={<ResetPassword />} />}
+        />
+        <Route path="/profile" element={<OnlyAuth component={<Profile />} />}>
+          <Route index element={<OnlyAuth component={<ProfileDetails />} />} />
+          <Route
+            path="/profile/orders"
+            element={<OnlyAuth component={<ProfileOrders />} />}
+          />
+        </Route>
+        <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+
+      {background && (
+        <Routes>
+          <Route
+            path="/ingredients/:ingredientId"
+            element={
+              <Modal title="Детали ингредиента" onClose={onItemClose}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 }

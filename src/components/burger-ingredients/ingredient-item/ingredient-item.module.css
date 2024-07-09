@@ -14,6 +14,19 @@
     opacity: .4
 }
 
+.link {
+    position: relative;
+    composes: mt-6 ml-4 mr-2 mb-2 from global;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;    
+    overflow: hidden;
+    cursor: pointer;  
+    text-decoration: none;
+    color: white;
+}
+
 .price {   
     display: flex;
     flex-direction: row;    

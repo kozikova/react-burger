@@ -24,9 +24,7 @@ export const burgerConstructorSlice = createSlice({
       },
     },
     deleteItem: (state, action) => {
-      state.items = state.items.filter(
-        (item) => item.key !== action.payload
-      );
+      state.items = state.items.filter((item) => item.key !== action.payload);
     },
     clear: (state, action) => {
       state.bun = null;
@@ -57,30 +55,19 @@ export const getIngredientCounts = createSelector(
     bun: state.burgerConstructor.bun,
   }),
   ({ ingredients, items, bun }) => {
-    const itemFullArray = [
-      bun?._id,
-      ...items.map((item) => item._id),
-      bun?._id,
-    ];
+    const itemFullArray = [bun?._id, ...items.map((item) => item._id), bun?._id];
     console.log("selector");
     return ingredients.reduce((accumulator, currentValue) => {
       return {
         ...accumulator,
-        [currentValue._id]: itemFullArray.filter(
-          (item) => item === currentValue._id
-        ).length,
+        [currentValue._id]: itemFullArray.filter((item) => item === currentValue._id)
+          .length,
       };
     }, {});
   }
 );
 
-export const {
-  addBun,
-  addItem,
-  deleteItem,
-  clear,
-  total,
-  setNewPosition,
-} = burgerConstructorSlice.actions;
+export const { addBun, addItem, deleteItem, clear, total, setNewPosition } =
+  burgerConstructorSlice.actions;
 
 export default burgerConstructorSlice.reducer;
