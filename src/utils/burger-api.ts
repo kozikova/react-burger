@@ -14,6 +14,11 @@ interface IUser {
   password: string;
 }
 
+interface IPasswordReset {
+  token: string;
+  password: string;
+}
+
 interface IUserAuth extends ISuccessObject {
   user: IUser;
 }
@@ -75,7 +80,7 @@ export const passwordResetApi = (arg: Pick<IUser, "email">) => {
 };
 
 //На экране /reset-password пользователь вводит новый пароль и код из имейла, а после нажимает кнопку «Сохранить».
-export const passwordResetResetApi = (arg) => {
+export const passwordResetResetApi = (arg: IPasswordReset) => {
   return fetch(`${normaApi}/password-reset/password-reset`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -84,8 +89,8 @@ export const passwordResetResetApi = (arg) => {
       password: arg.password,
     }),
   })
-    .then(getResponse)
-    .then((messageData) => {
+    .then(getResponse<IMessage>)
+    .then((messageData: IMessage) => {
       if (!messageData.success) {
         return Promise.reject(messageData);
       }
@@ -94,7 +99,7 @@ export const passwordResetResetApi = (arg) => {
 };
 
 //На экране /register .
-export const registerApi = (arg) => {
+export const registerApi = (arg: IUser) => {
   return fetch(`${normaApi}/auth/register`, {
     method: "POST",
     body: JSON.stringify({
@@ -103,8 +108,8 @@ export const registerApi = (arg) => {
       password: arg.password,
     }),
   })
-    .then(getResponse)
-    .then((registerData) => {
+    .then(getResponse<IUserResponse>)
+    .then((registerData: IUserResponse) => {
       if (!registerData.success) {
         return Promise.reject(registerData);
       }
@@ -115,7 +120,7 @@ export const registerApi = (arg) => {
 };
 
 //На экране /login .
-export const loginApi = (arg) => {
+export const loginApi = (arg: Omit<IUser, "name">) => {
   return fetch(`${normaApi}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -124,8 +129,8 @@ export const loginApi = (arg) => {
       password: arg.password,
     }),
   })
-    .then(getResponse)
-    .then((loginData) => {
+    .then(getResponse<Omit<IUserResponse, "user">>)
+    .then((loginData: Omit<IUserResponse, "user">) => {
       if (!loginData.success) {
         return Promise.reject(loginData);
       }
@@ -144,8 +149,8 @@ export const logoutApi = () => {
       token: localStorage.getItem("refreshToken"),
     }),
   })
-    .then(getResponse)
-    .then((messageData) => {
+    .then(getResponse<IMessage>)
+    .then((messageData: IMessage) => {
       if (!messageData.success) {
         return Promise.reject(messageData);
       }
@@ -166,8 +171,8 @@ export const refreshToken = () => {
       token: localStorage.getItem("refreshToken"),
     }),
   })
-    .then(getResponse)
-    .then((refreshData) => {
+    .then(getResponse<Omit<IUserResponse, "user">>)
+    .then((refreshData: Omit<IUserResponse, "user">) => {
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
@@ -177,7 +182,7 @@ export const refreshToken = () => {
     });
 };
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (url: string, options): Promise => {
   try {
     const res = await fetch(url, options);
     return await getResponse(res);
@@ -201,17 +206,17 @@ export const getUserApi = () => {
     headers: {
       Authorization: localStorage.getItem("accessToken"),
     },
-  }).then(getResponse);
+  }).then(getResponse<IUserResponse>);
 
   //return { user: null };
 };
 
-export const patchUser = (arg) => {
+export const patchUser = (arg: IUser) => {
   return fetch(`${normaApi}/auth/user`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: localStorage.getItem("accessToken"),
+      Authorization: localStorage.getItem("accessToken") as string,
     },
     body: JSON.stringify({
       name: arg.name,
