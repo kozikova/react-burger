@@ -1,41 +1,72 @@
 import { normaApi } from "./urls";
 
-const getResponse = (res) => {
+interface ISuccessObject {
+  success: true;
+}
+
+interface IMessage extends ISuccessObject {
+  message: string | null;
+}
+
+interface IUser {
+  email: string;
+  name: string;
+  password: string;
+}
+
+interface IUserAuth extends ISuccessObject {
+  user: IUser;
+}
+
+interface IUserResponse extends IUserAuth {
+  accessToken: string;
+  refreshToken: string;
+}
+
+const getResponse = <T>(res: Response): Promise<T> => {
   if (res.ok) {
     return res.json();
   }
 
-  if (res.success) {
+  /* if (res.success) {
+    return res;
+  }*/
+
+  return Promise.reject(`Ошибка ${res.status}`);
+};
+
+const checkSuccess = (res: ISuccessObject) => {
+  if (res && res.success) {
     return res;
   }
 
-  return Promise.reject(`Ошибка ${res.status}`);
+  return Promise.reject(`Ответ не success: ${res}`);
 };
 
 export const getIngredientsApi = () => {
   return fetch(`${normaApi}/ingredients`).then(getResponse);
 };
 
-export const postOrderApi = (ids) => {
+export const postOrderApi = (ids: string[]) => {
   return fetch(`${normaApi}/orders`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      authorization: localStorage.getItem("accessToken"),
+      authorization: localStorage.getItem("accessToken") as string,
     },
     body: JSON.stringify({ ingredients: ids }),
   }).then(getResponse);
 };
 
 //На экране /forgot-password пользователь вводит адрес электронной почты и нажимает кнопку «Восстановить»
-export const passwordResetApi = (arg) => {
+export const passwordResetApi = (arg: Pick<IUser, "email">) => {
   return fetch(`${normaApi}/password-reset`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email: arg.email }),
   })
-    .then(getResponse)
-    .then((messageData) => {
+    .then(getResponse<IMessage>)
+    .then((messageData: IMessage) => {
       if (!messageData.success) {
         return Promise.reject(messageData);
       }

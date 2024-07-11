@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -17,24 +17,44 @@ import { postOrder } from "../../services/orderDetails";
 import { ElementCustom } from "./element-custom/element-custom";
 import { useDrop } from "react-dnd";
 import { useNavigate } from "react-router";
+import { IIngredientTypeWithKey } from "../../utils/types";
 
-export default function BurgerConstructor() {
+type TDragObject = {
+  key: string;
+  index: number;
+  type: "bun" | "main" | "sauce";
+};
+
+type TDropCollectedProps = {
+  isOver: boolean;
+};
+
+const BurgerConstructor: FC = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const bun = useSelector((store) => store.burgerConstructor.bun);
-  const items = useSelector((store) => store.burgerConstructor.items);
-  const { loading, error, orderFromApi } = useSelector((state) => state.orderDetails);
 
+  //на следующем спринте
+  //@ts-ignore
+  const bun = useSelector((store) => store.burgerConstructor.bun);
+  //@ts-ignore
+  const items = useSelector((store) => store.burgerConstructor.items);
+  //@ts-ignore
+  const { loading, error, orderFromApi } = useSelector((store) => store.orderDetails);
+  //@ts-ignore
   const user = useSelector((store) => store.userData.user);
 
   useEffect(() => {
+    //на следующем спринте
+    //@ts-ignore
     dispatch(total());
   }, [dispatch, bun, items]);
 
+  //на следующем спринте
+  //@ts-ignore
   const getNewTotal = useSelector((store) => store.burgerConstructor.totalPrice);
 
-  const [, dropTargetRef] = useDrop({
+  const [, dropTargetRef] = useDrop<TDragObject, unknown, TDropCollectedProps>({
     accept: "dndContainer",
     drop: (item) => dropDispachActions(item),
     collect(monitor) {
@@ -42,7 +62,7 @@ export default function BurgerConstructor() {
     },
   });
 
-  const dropDispachActions = (item) => {
+  const dropDispachActions = (item: TDragObject) => {
     if (item.type === "bun") {
       dispatch(addBun(item));
     } else {
@@ -50,12 +70,14 @@ export default function BurgerConstructor() {
     }
   };
 
-  const onDeleteItem = (key) => {
+  const onDeleteItem = (key: string) => {
     dispatch(deleteItem(key));
   };
 
   const postAndOpenOrder = () => {
     if (user) {
+      //на следующем спринте
+      //@ts-ignore
       dispatch(postOrder([bun._id, ...items.map((item) => item._id), bun?._id]));
       openModal();
     } else {
@@ -64,6 +86,8 @@ export default function BurgerConstructor() {
   };
 
   const closeAndClearOrder = () => {
+    //на следующем спринте
+    //@ts-ignore
     dispatch(clear());
     closeModal();
   };
@@ -74,7 +98,7 @@ export default function BurgerConstructor() {
         <ElementCustom bun={bun} item={null} typeIsTop={true} bunOrMainType={true} />
         <div className={constructorStyles.constructor_y_scrollable}>
           {items.length ? (
-            items.map((item, index) => (
+            items.map((item: IIngredientTypeWithKey, index: number) => (
               <ElementCustom
                 bun={null}
                 item={item}
@@ -118,4 +142,6 @@ export default function BurgerConstructor() {
       </div>
     </div>
   );
-}
+};
+
+export default BurgerConstructor;

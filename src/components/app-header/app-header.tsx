@@ -6,8 +6,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import appHeaderStyles from "./app-header.module.css";
 import { NavLink } from "react-router-dom";
+import { FC } from "react";
 
-export default function AppHeader() {
+const AppHeader: FC = () => {
   return (
     <header className={appHeaderStyles.app_header}>
       <nav className={appHeaderStyles.nav}>
@@ -44,7 +45,9 @@ export default function AppHeader() {
           )}
         </NavLink>
       </nav>
-      <Logo className={appHeaderStyles.box_top_bottom} />
+      <div className={appHeaderStyles.box_top_bottom}>
+        <Logo />
+      </div>
       <NavLink to="/profile" className={appHeaderStyles.menu_button}>
         {({ isActive }) => (
           <>
@@ -63,4 +66,6 @@ export default function AppHeader() {
       </NavLink>
     </header>
   );
-}
+};
+
+export default AppHeader;

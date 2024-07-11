@@ -1,8 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../modal/modal";
-import { useModal } from "../../hooks/useModal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import IngredientGroup from "./ingredient-group/ingredient-group";
@@ -13,7 +11,6 @@ export default function BurgerIngredients() {
   const ingredients = useSelector((store) => store.ingredients.ingredients);
 
   const [current, setCurrent] = React.useState("bun");
-  const { isModalOpen, openModal, closeModal } = useModal();
 
   const scrollAreaRef = React.useRef();
   const bunTitle = React.useRef();
