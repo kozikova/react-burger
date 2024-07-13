@@ -1,8 +1,5 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router";
-import { getIsAuthChecked, getUser } from "../../services/userData";
-
-import PropTypes from "prop-types";
 import { FC, ReactElement } from "react";
 
 type TProtectedProps = {
@@ -11,8 +8,6 @@ type TProtectedProps = {
 };
 
 const Protected: FC<TProtectedProps> = ({ component, onlyUnAuth = false }) => {
-  //const isAuthChecked = useSelector(getIsAuthChecked);
-  //const user = useSelector(getUser);
   //на следующем спринте
   //@ts-ignore
   const isAuthChecked = useSelector((store) => store.userData.isAuthChecked);

@@ -8,7 +8,6 @@ import Modal from "../../modal/modal";
 import { useModal } from "../../../hooks/useModal";
 import IngredientDetails from "../../ingredient-details/ingredient-details";
 import itemStyles from "./ingredient-item.module.css";
-import PropTypes from "prop-types";
 import { IIngredientType } from "../../../utils/types";
 import { useDrag } from "react-dnd";
 

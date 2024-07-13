@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import modalStyles from "./modal.module.css";
-import PropTypes from "prop-types";
 
 const modalRoot = document.getElementById("react-modals");
 type ModalProps = {
@@ -43,12 +42,6 @@ const Modal: FC<PropsWithChildren<ModalProps>> = (props) => {
     </>,
     modalRoot!
   );
-};
-
-Modal.propTypes = {
-  children: PropTypes.element.isRequired,
-  title: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default Modal;

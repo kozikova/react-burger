@@ -1,6 +1,5 @@
 import groupStyles from "./ingredient-group.module.css";
 import IngredientItem from "../ingredient-item/ingredient-item";
-import PropTypes from "prop-types";
 import { IIngredientType } from "../../../utils/types";
 import { getIngredientCounts } from "../../../services/burgerConstructor";
 import { useSelector } from "react-redux";
