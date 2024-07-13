@@ -34,7 +34,7 @@ const Modal: FC<PropsWithChildren<ModalProps>> = (props) => {
         <div className={modalStyles.title_wrapper}>
           <p className="text_type_main-large">{props.title}</p>
           <button className={modalStyles.close_button} onClick={props.onClose}>
-            <CloseIcon type={"error"} />
+            <CloseIcon type={"primary"} />
           </button>
         </div>
         {props.children}
