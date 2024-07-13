@@ -1,9 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
 
 import styles from "./not-found.module.css";
 
-export function NotFound() {
+const NotFound: FC = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -22,6 +22,6 @@ export function NotFound() {
       </div>
     </div>
   );
-}
+};
 
 export default NotFound;

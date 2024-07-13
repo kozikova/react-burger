@@ -1,21 +1,28 @@
 import ingredientStyles from "./ingredient-details.module.css";
-import { React, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { open, close } from "../../services/ingredientDetails";
+import { IIngredientType } from "../../utils/types";
 
-export default function IngredientDetails() {
+export const IngredientDetails: FC = () => {
   const dispatch = useDispatch();
+  //на следующем спринте
+  //@ts-ignore
   const ingredients = useSelector((store) => store.ingredients.ingredients);
   const { ingredientId } = useParams();
   useEffect(() => {
-    const ingredient = ingredients.find((item) => item._id === ingredientId);
+    const ingredient = ingredients.find(
+      (item: IIngredientType) => item._id === ingredientId
+    );
 
     if (ingredient) {
       dispatch(open(ingredient));
     }
   }, [dispatch, ingredients, ingredientId]);
 
+  //на следующем спринте
+  //@ts-ignore
   const info = useSelector((store) => store.ingredientDetails.info);
 
   return (
@@ -50,4 +57,6 @@ export default function IngredientDetails() {
       )}
     </div>
   );
-}
+};
+
+export default IngredientDetails;

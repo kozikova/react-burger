@@ -1,22 +1,24 @@
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useEffect } from "react";
+import React, { ChangeEvent, FC, FormEvent, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styles from "./forgot-password.module.css";
 import { passwordResetAction } from "../../services/userData";
 
-function ForgotPassword() {
+const ForgotPassword: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = React.useState("");
-  const onEmailChange = (e) => {
+  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const onSubmitReset = (e) => {
+  const onSubmitReset = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //на следующем спринте
+    //@ts-ignore
     dispatch(passwordResetAction({ email }));
-    localStorage.setItem("resetPassword", true);
+    localStorage.setItem("resetPassword", "true");
     navigate("/reset-password");
   };
 
@@ -42,6 +44,6 @@ function ForgotPassword() {
       </form>
     </main>
   );
-}
+};
 
 export default ForgotPassword;

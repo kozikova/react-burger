@@ -1,11 +1,16 @@
 import groupStyles from "./ingredient-group.module.css";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import PropTypes from "prop-types";
-import ingredientType from "../../../utils/types";
+import { IIngredientType } from "../../../utils/types";
 import { getIngredientCounts } from "../../../services/burgerConstructor";
 import { useSelector } from "react-redux";
+import { FC } from "react";
 
-export default function IngredientGroup(props) {
+type TIngredientGroupProps = {
+  list: IIngredientType[];
+};
+
+export const IngredientGroup: FC<TIngredientGroupProps> = (props) => {
   const countObject = useSelector(getIngredientCounts);
 
   return (
@@ -17,8 +22,6 @@ export default function IngredientGroup(props) {
       </ul>
     </div>
   );
-}
-
-IngredientGroup.propTypes = {
-  list: PropTypes.arrayOf(ingredientType.isRequired).isRequired,
 };
+
+export default IngredientGroup;

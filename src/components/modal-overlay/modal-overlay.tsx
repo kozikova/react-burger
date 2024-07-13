@@ -2,22 +2,22 @@ import React from "react";
 import modalOverlayStyles from "./modal-overlay.module.css";
 import PropTypes from "prop-types";
 
-export default function ModalOverlay(props) {
-  const onOverlayClick = (e) => {
-    if (e.currentTarget === e.target) {
-      props.closeModal();
-    }
-  };
+type ModalOverlayProps = {
+  closeModal: () => void;
+};
 
+const ModalOverlay: React.FC<ModalOverlayProps> = (props) => {
   return (
     <div
       id="closeLayout"
-      onClick={onOverlayClick}
+      onClick={props.closeModal}
       className={modalOverlayStyles.half_transparent_overlay}
     />
   );
-}
+};
 
 ModalOverlay.propTypes = {
   closeModal: PropTypes.func.isRequired,
 };
+
+export default ModalOverlay;

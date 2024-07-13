@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import {
   Counter,
@@ -9,10 +9,15 @@ import { useModal } from "../../../hooks/useModal";
 import IngredientDetails from "../../ingredient-details/ingredient-details";
 import itemStyles from "./ingredient-item.module.css";
 import PropTypes from "prop-types";
-import ingredientType from "../../../utils/types";
+import { IIngredientType } from "../../../utils/types";
 import { useDrag } from "react-dnd";
 
-export default function IngredientItem(props) {
+type TIngredientItemProps = {
+  info: IIngredientType;
+  count: number;
+};
+
+export const IngredientItem: FC<TIngredientItemProps> = (props) => {
   const location = useLocation();
 
   const ingredientId = props.info["_id"];
@@ -49,9 +54,6 @@ export default function IngredientItem(props) {
       </Link>
     </li>
   );
-}
-
-IngredientItem.propTypes = {
-  info: ingredientType.isRequired,
-  count: PropTypes.number,
 };
+
+export default IngredientItem;

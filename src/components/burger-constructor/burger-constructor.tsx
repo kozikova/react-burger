@@ -95,7 +95,14 @@ const BurgerConstructor: FC = () => {
   return (
     <div className={constructorStyles.layout}>
       <ul ref={dropTargetRef} className={constructorStyles.without_padding}>
-        <ElementCustom bun={bun} item={null} typeIsTop={true} bunOrMainType={true} />
+        <ElementCustom
+          bun={bun}
+          item={null}
+          typeIsTop={true}
+          bunOrMainType={true}
+          deleteItem={undefined}
+          index={0}
+        />
         <div className={constructorStyles.constructor_y_scrollable}>
           {items.length ? (
             items.map((item: IIngredientTypeWithKey, index: number) => (
@@ -115,12 +122,21 @@ const BurgerConstructor: FC = () => {
               item={null}
               typeIsTop={null}
               bunOrMainType={false}
+              deleteItem={undefined}
               key={"0"}
+              index={0}
             />
           )}
         </div>
 
-        <ElementCustom bun={bun} item={null} type={false} bunOrMainType={true} />
+        <ElementCustom
+          bun={bun}
+          item={null}
+          typeIsTop={false}
+          deleteItem={undefined}
+          bunOrMainType={true}
+          index={0}
+        />
       </ul>
       <div className={constructorStyles.footer}>
         <div className={constructorStyles.total}>

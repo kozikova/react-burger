@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { ChangeEvent, FC, FormEvent, useEffect } from "react";
 import {
   Button,
   Input,
@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import styles from "./login.module.css";
 import { loginAction } from "../../services/userData";
 
-function Login() {
+const Login: FC = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
@@ -18,16 +18,18 @@ function Login() {
   const state = location.state;
 
   const dispatch = useDispatch();
-  const onEmailChange = (e) => {
+  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const onPasswordChange = (e) => {
+  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const onSubmitLogin = (e) => {
+  const onSubmitLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //на следующем спринте
+    //@ts-ignore
     dispatch(loginAction({ email, password }));
     navigate(state ? state.from : "/");
   };
@@ -65,6 +67,6 @@ function Login() {
       </form>
     </main>
   );
-}
+};
 
 export default Login;

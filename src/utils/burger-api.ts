@@ -28,6 +28,10 @@ interface IUserResponse extends IUserAuth {
   refreshToken: string;
 }
 
+type TMessageObject = {
+  message?: string;
+};
+
 const getResponse = <T>(res: Response): Promise<T> => {
   if (res.ok) {
     return res.json();
@@ -182,15 +186,20 @@ export const refreshToken = () => {
     });
 };
 
-export const fetchWithRefresh = async (url: string, options): Promise => {
+export const fetchWithRefresh = async <T>(
+  url: string,
+  options: RequestInit
+): Promise<T> => {
   try {
     const res = await fetch(url, options);
     return await getResponse(res);
   } catch (err) {
     console.log(err);
-    if (err.message === "jwt expired") {
+    if ((err as TMessageObject).message === "jwt expired") {
       const refreshData = await refreshToken();
-      options.headers.authorization = refreshData.accessToken;
+      const headers = options.headers as Record<string, string>;
+      headers.authorization = refreshData.accessToken;
+      options.headers = headers;
       const res = await fetch(url, options);
       return await getResponse(res);
     } else {
@@ -201,12 +210,12 @@ export const fetchWithRefresh = async (url: string, options): Promise => {
 
 export const getUserApi = () => {
   //if (localStorage.getItem("refreshToken") || localStorage.getItem("accessToken"))
-  return fetchWithRefresh(`${normaApi}/auth/user`, {
-    Method: "GET",
+  return fetchWithRefresh<IUserResponse>(`${normaApi}/auth/user`, {
+    method: "GET",
     headers: {
-      Authorization: localStorage.getItem("accessToken"),
+      Authorization: localStorage.getItem("accessToken") as string,
     },
-  }).then(getResponse<IUserResponse>);
+  });
 
   //return { user: null };
 };

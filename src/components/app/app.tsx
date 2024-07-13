@@ -3,7 +3,7 @@ import AppHeader from "./../app-header/app-header";
 import styles from "./app.module.css";
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Home from "./../../pages/Home/home";
-import Login from "./../../pages/Login/login";
+import Login from "../../pages/Login/login";
 import Profile from "./../../pages/Profile/profile";
 import Modal from "../modal/modal";
 import IngredientDetails from "./../ingredient-details/ingredient-details";
