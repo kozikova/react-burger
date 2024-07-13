@@ -97,8 +97,8 @@ export const ElementCustom: FC<TElementCustomProps> = ({
         type={typeIsTop ? "top" : "bottom"}
         isLocked={true}
         text={bun ? `${bun?.name} ${typeIsTop ? "(верх)" : "(низ)"}` : "Выберите булку"}
-        price={bun!.price}
-        thumbnail={bun!.image_mobile}
+        price={bun ? bun.price : 0}
+        thumbnail={bun ? bun.image_mobile : ""}
       />
     </li>
   ) : (
@@ -117,8 +117,8 @@ export const ElementCustom: FC<TElementCustomProps> = ({
       <DragIcon type="primary" />
       <ConstructorElement
         text={item ? item?.name : "Выберите начинку"}
-        price={item!.price}
-        thumbnail={item!.image_mobile}
+        price={item ? item.price : 0}
+        thumbnail={item ? item.image_mobile : ""}
         handleClose={handleClose}
       />
     </li>
