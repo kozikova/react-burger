@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { ChangeEvent, FC, FormEvent, useEffect } from "react";
 import {
   Button,
   Input,
@@ -10,7 +10,7 @@ import styles from "./register.module.css";
 import { registerAction } from "../../services/userData";
 import { useDispatch, useSelector } from "react-redux";
 
-function Register() {
+const Register: FC = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [name, setName] = React.useState("");
@@ -18,20 +18,22 @@ function Register() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const onEmailChange = (e) => {
+  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const onPasswordChange = (e) => {
+  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const onNameChange = (e) => {
+  const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 
-  const onSubmitRegister = (e) => {
+  const onSubmitRegister = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //на следующем спринте
+    //@ts-ignore
     dispatch(registerAction({ name, password, email }));
     navigate("/login");
   };
@@ -47,6 +49,8 @@ function Register() {
           value={name}
           size={"default"}
           extraClass="mt-6"
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
         />
         <EmailInput
           placeholder={"E-mail"}
@@ -72,6 +76,6 @@ function Register() {
       </form>
     </main>
   );
-}
+};
 
 export default Register;

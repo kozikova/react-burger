@@ -3,15 +3,37 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import ingredientType, { ingredientTypeWithKey } from "../../../utils/types";
+import { IIngredientType, IIngredientTypeWithKey } from "../../../utils/types";
 import { useDrag, useDrop } from "react-dnd";
-import React from "react";
+import React, { FC, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setNewPosition } from "../../../services/burgerConstructor";
 import { v4 as uuidv4 } from "uuid";
+import { Identifier } from "dnd-core";
 
-export const ElementCustom = ({
+type TElementCustomProps = {
+  bun: IIngredientType | null;
+  item: IIngredientTypeWithKey | null;
+  typeIsTop: boolean | null;
+  bunOrMainType: boolean;
+  deleteItem: ((key: string) => void) | undefined;
+  index: number;
+};
+
+type TDragObject = {
+  key: string;
+  index: number;
+};
+
+type TDropCollectedProps = {
+  handlerId: Identifier | null;
+};
+
+type TDragCollectedProps = {
+  isDrag: boolean;
+};
+
+export const ElementCustom: FC<TElementCustomProps> = ({
   bun,
   item,
   typeIsTop,
@@ -19,10 +41,10 @@ export const ElementCustom = ({
   deleteItem,
   index,
 }) => {
-  const ref = React.useRef(null);
+  const ref = useRef<HTMLLIElement | null>(null);
   const dispatch = useDispatch();
 
-  const [{ handlerId }, drop] = useDrop({
+  const [{ handlerId }, drop] = useDrop<TDragObject, unknown, TDropCollectedProps>({
     accept: "sortable",
     collect: (monitor) => ({
       handlerId: monitor.getHandlerId(),
@@ -37,7 +59,7 @@ export const ElementCustom = ({
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
 
       if (
         (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) ||
@@ -51,9 +73,9 @@ export const ElementCustom = ({
     },
   });
 
-  const [{ isDragging }, drag] = useDrag({
+  const [{ isDrag }, drag] = useDrag<TDragObject, unknown, TDragCollectedProps>({
     type: "sortable",
-    item: () => ({ key: item?.key, index }),
+    item: () => ({ key: item!.key, index }),
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),
@@ -62,7 +84,7 @@ export const ElementCustom = ({
   drag(drop(ref));
 
   const handleClose = () => {
-    deleteItem(item?.key);
+    deleteItem!(item!.key);
   };
 
   return bunOrMainType ? (
@@ -74,8 +96,8 @@ export const ElementCustom = ({
         type={typeIsTop ? "top" : "bottom"}
         isLocked={true}
         text={bun ? `${bun?.name} ${typeIsTop ? "(верх)" : "(низ)"}` : "Выберите булку"}
-        price={bun?.price}
-        thumbnail={bun?.image_mobile}
+        price={bun ? bun.price : 0}
+        thumbnail={bun ? bun.image_mobile : ""}
       />
     </li>
   ) : (
@@ -84,7 +106,7 @@ export const ElementCustom = ({
       data-handler-id={handlerId}
       className={`${
         item
-          ? isDragging
+          ? isDrag
             ? elementStyles.item_dragable_opacity
             : elementStyles.item_dragable
           : elementStyles.item_empty
@@ -94,19 +116,10 @@ export const ElementCustom = ({
       <DragIcon type="primary" />
       <ConstructorElement
         text={item ? item?.name : "Выберите начинку"}
-        price={item?.price}
-        thumbnail={item?.image_mobile}
+        price={item ? item.price : 0}
+        thumbnail={item ? item.image_mobile : ""}
         handleClose={handleClose}
       />
     </li>
   );
-};
-
-ElementCustom.propTypes = {
-  bun: ingredientType,
-  item: ingredientType,
-  typeIsTop: PropTypes.bool,
-  bunOrMainType: PropTypes.bool,
-  deleteItem: PropTypes.func,
-  index: PropTypes.number,
 };
