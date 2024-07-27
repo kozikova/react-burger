@@ -4,60 +4,68 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import profileDetailsStyles from "./profile-details.module.css";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { patchUserAction } from "../../../services/userData";
+import useAppSelector from "../../../hooks/useAppSelector";
+import useAppDispatch from "../../../hooks/useAppDispatch";
+
+type TProfileDetails = {
+  name: string;
+  email: string;
+  password: string;
+};
 
 export const ProfileDetails = () => {
-  const user = useSelector((store) => store.userData.user);
-  const [profileState, setProfileState] = useState({});
+  const user = useAppSelector((store) => store.userData.user);
+  const [profileState, setProfileState] = useState<TProfileDetails>({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [buttonVisible, setButtonVisible] = useState(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (
-      profileState.name !== user.name ||
-      profileState.email !== user.email ||
-      profileState.password
+      profileState!.name !== user!.name ||
+      profileState!.email !== user!.email ||
+      profileState!.password
     ) {
       setButtonVisible(true);
     } else {
       setButtonVisible(false);
     }
-  }, [profileState, user.name, user.email]);
+  }, [profileState, user]);
 
   useEffect(() => {
-    if (user.name && user.email) {
-      setProfileState({ name: user.name, email: user.email });
+    if (user!.name && user!.email && user!.password) {
+      setProfileState({ name: user!.name, email: user!.email, password: user!.password });
     }
-  }, [user.name, user.email]);
+  }, [user]);
 
   const onCancel = () => {
     setProfileState({
-      name: user.name,
-      email: user.email,
+      name: user!.name,
+      email: user!.email,
       password: "",
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(patchUserAction(profileState));
   };
 
-  const onEmailChange = (e) => {
+  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setProfileState({ ...profileState, email: e.target.value });
   };
 
-  const onPasswordChange = (e) => {
+  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setProfileState({ ...profileState, password: e.target.value });
   };
 
-  const onNameChange = (e) => {
+  const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setProfileState({ ...profileState, name: e.target.value });
   };
 
@@ -71,6 +79,8 @@ export const ProfileDetails = () => {
         name={"name"}
         size={"default"}
         extraClass="mb-6"
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
       />
       <EmailInput
         onChange={onEmailChange}

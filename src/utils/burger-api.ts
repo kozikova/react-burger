@@ -1,35 +1,52 @@
+import { IIngredientType } from "./types";
 import { normaApi } from "./urls";
 
 interface ISuccessObject {
   success: true;
 }
 
-interface IMessage extends ISuccessObject {
+export interface IMessage extends ISuccessObject {
   message: string | null;
 }
 
-interface IUser {
+export interface IUser {
   email: string;
   name: string;
   password: string;
 }
 
-interface IPasswordReset {
+export interface IPasswordReset {
   token: string;
   password: string;
 }
 
-interface IUserAuth extends ISuccessObject {
+export interface IUserAuth extends ISuccessObject {
   user: IUser;
 }
 
-interface IUserResponse extends IUserAuth {
+export interface IUserResponse extends IUserAuth {
   accessToken: string;
   refreshToken: string;
 }
 
 type TMessageObject = {
   message?: string;
+};
+
+export type TIngredientsResponse = {
+  success: boolean;
+  data: IIngredientType[];
+  error: string | null;
+};
+
+export type TOrder = {
+  number: number;
+};
+
+export type TPostOrderResponse = {
+  success: boolean;
+  order: TOrder;
+  error: string | null;
 };
 
 const getResponse = <T>(res: Response): Promise<T> => {
@@ -52,11 +69,11 @@ const checkSuccess = (res: ISuccessObject) => {
   return Promise.reject(`Ответ не success: ${res}`);
 };
 
-export const getIngredientsApi = () => {
-  return fetch(`${normaApi}/ingredients`).then(getResponse);
+export const getIngredientsApi = (): Promise<TIngredientsResponse> => {
+  return fetch(`${normaApi}/ingredients`).then(getResponse<TIngredientsResponse>);
 };
 
-export const postOrderApi = (ids: string[]) => {
+export const postOrderApi = (ids: string[]): Promise<TPostOrderResponse> => {
   return fetch(`${normaApi}/orders`, {
     method: "POST",
     headers: {
@@ -64,7 +81,7 @@ export const postOrderApi = (ids: string[]) => {
       authorization: localStorage.getItem("accessToken") as string,
     },
     body: JSON.stringify({ ingredients: ids }),
-  }).then(getResponse);
+  }).then(getResponse<TPostOrderResponse>);
 };
 
 //На экране /forgot-password пользователь вводит адрес электронной почты и нажимает кнопку «Восстановить»
@@ -133,8 +150,8 @@ export const loginApi = (arg: Omit<IUser, "name">) => {
       password: arg.password,
     }),
   })
-    .then(getResponse<Omit<IUserResponse, "user">>)
-    .then((loginData: Omit<IUserResponse, "user">) => {
+    .then(getResponse<IUserResponse>)
+    .then((loginData: IUserResponse) => {
       if (!loginData.success) {
         return Promise.reject(loginData);
       }
@@ -232,5 +249,13 @@ export const patchUser = (arg: IUser) => {
       email: arg.email,
       password: arg.password,
     }),
-  }).then(getResponse);
+  })
+    .then(getResponse<IUserAuth>)
+    .then((userData: IUserAuth) => {
+      if (!userData.success) {
+        return Promise.reject(userData);
+      }
+
+      return userData;
+    });
 };

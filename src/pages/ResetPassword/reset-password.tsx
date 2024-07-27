@@ -5,14 +5,14 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./reset-password.module.css";
-import { useDispatch } from "react-redux";
 import React, { ChangeEvent, FC, FormEvent, useEffect } from "react";
 import { passwordResetResetAction } from "../../services/userData";
+import useAppDispatch from "../../hooks/useAppDispatch";
 
 const ResetPassword: FC = () => {
   const [password, setPassword] = React.useState("");
   const [code, setCode] = React.useState("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +26,7 @@ const ResetPassword: FC = () => {
   const onSubmitReset = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //на следующем спринте
-    //@ts-ignore
+
     dispatch(passwordResetResetAction({ password: password, token: code }));
     localStorage.setItem("resetPassword", "false");
     navigate("/login");

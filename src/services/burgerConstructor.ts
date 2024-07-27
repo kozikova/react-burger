@@ -1,37 +1,49 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
+import { IIngredientType, IIngredientTypeWithKey } from "../utils/types";
+import { RootState } from "./store";
 
-const initialState = {
+type TInitialState = {
+  items: IIngredientTypeWithKey[];
+  bun: IIngredientTypeWithKey | null;
+  totalPrice: number;
+};
+
+const initialState: TInitialState = {
   items: [],
   bun: null,
   totalPrice: 0,
 };
 
+interface ICountObject {
+  [name: string]: number;
+}
+
 export const burgerConstructorSlice = createSlice({
   name: "burgerConstructor",
   initialState,
   reducers: {
-    addBun: (state, action) => {
+    addBun: (state, action: PayloadAction<IIngredientTypeWithKey>) => {
       state.bun = action.payload;
     },
     addItem: {
-      reducer: (state, action) => {
+      reducer: (state, action: PayloadAction<IIngredientTypeWithKey>) => {
         state.items.push(action.payload);
       },
 
-      prepare: (item) => {
+      prepare: (item: IIngredientType) => {
         return { payload: { ...item, key: uuidv4() } };
       },
     },
-    deleteItem: (state, action) => {
+    deleteItem: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((item) => item.key !== action.payload);
     },
-    clear: (state, action) => {
+    clear: (state) => {
       state.bun = null;
       state.items = [];
       state.totalPrice = 0;
     },
-    total: (state, action) => {
+    total: (state) => {
       state.totalPrice =
         (state.bun ? state.bun.price * 2 : 0) +
         state.items.reduce(
@@ -39,7 +51,10 @@ export const burgerConstructorSlice = createSlice({
           0
         );
     },
-    setNewPosition: (state, action) => {
+    setNewPosition: (
+      state,
+      action: PayloadAction<{ dragIndex: number; hoverIndex: number }>
+    ) => {
       const { dragIndex, hoverIndex } = action.payload;
       const items = [...state.items];
       items.splice(hoverIndex, 0, items.splice(dragIndex, 1)[0]);
@@ -49,21 +64,28 @@ export const burgerConstructorSlice = createSlice({
 });
 
 export const getIngredientCounts = createSelector(
-  (state) => ({
+  (state: RootState) => ({
     ingredients: state.ingredients.ingredients,
     items: state.burgerConstructor.items,
     bun: state.burgerConstructor.bun,
   }),
   ({ ingredients, items, bun }) => {
-    const itemFullArray = [bun?._id, ...items.map((item) => item._id), bun?._id];
+    const itemFullArray = [
+      bun?._id,
+      ...items.map((item: IIngredientType) => item._id),
+      bun?._id,
+    ];
     console.log("selector");
-    return ingredients.reduce((accumulator, currentValue) => {
-      return {
-        ...accumulator,
-        [currentValue._id]: itemFullArray.filter((item) => item === currentValue._id)
-          .length,
-      };
-    }, {});
+    return ingredients.reduce(
+      (accumulator: ICountObject, currentValue: IIngredientType) => {
+        return {
+          ...accumulator,
+          [currentValue._id]: itemFullArray.filter((item) => item === currentValue._id)
+            .length,
+        };
+      },
+      {} as ICountObject
+    );
   }
 );
 

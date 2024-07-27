@@ -4,13 +4,14 @@ import { IIngredientType } from "../../../utils/types";
 import { getIngredientCounts } from "../../../services/burgerConstructor";
 import { useSelector } from "react-redux";
 import { FC } from "react";
+import useAppSelector from "../../../hooks/useAppSelector";
 
 type TIngredientGroupProps = {
   list: IIngredientType[];
 };
 
 export const IngredientGroup: FC<TIngredientGroupProps> = (props) => {
-  const countObject = useSelector(getIngredientCounts);
+  const countObject = useAppSelector(getIngredientCounts);
 
   return (
     <div className={groupStyles.layout}>

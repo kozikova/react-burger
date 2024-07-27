@@ -1,15 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { postOrderApi } from "../utils/burger-api";
+import { postOrderApi, TOrder, TPostOrderResponse } from "../utils/burger-api";
 
-const initialState = {
-  orderFromApi: {},
+type TInitialState = {
+  orderFromApi: TPostOrderResponse | null;
+  loading: boolean;
+  error: string | null;
+};
+
+const initialState: TInitialState = {
+  orderFromApi: null,
   loading: false,
   error: null,
 };
 
 export const postOrder = createAsyncThunk(
   "postOrder/handleAndPlaceOrder",
-  async (itemIds) => {
+  async (itemIds: string[]) => {
     return await postOrderApi(itemIds);
   }
 );
@@ -18,6 +24,7 @@ export const orderDetailsSlice = createSlice({
   name: "orderDetails",
   initialState,
   selectors: {},
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(postOrder.fulfilled, (state, action) => {
@@ -30,7 +37,7 @@ export const orderDetailsSlice = createSlice({
       })
       .addCase(postOrder.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload as string;
       });
   },
 });
