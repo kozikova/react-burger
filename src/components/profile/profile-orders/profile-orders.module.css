@@ -1,0 +1,19 @@
+.wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-start;
+    padding-top: 120px;    
+}
+
+.column {
+    max-width: 400px;   
+    flex-direction: row;
+    justify-items: flex-start;      
+}
+
+.row {
+    display: flex;    
+    align-items: flex-start;
+}

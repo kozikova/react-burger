@@ -18,3 +18,30 @@ export interface IIngredientType {
 export interface IIngredientTypeWithKey extends IIngredientType {
   key: string;
 }
+
+export interface IIngredientTypeWithCount extends IIngredientType {
+  count: number;
+}
+
+export enum WebsocketStatus {
+  CONNECTING = "CONNECTING...",
+  ONLINE = "ONLINE",
+  OFFLINE = "OFFLINE",
+}
+
+export interface IWebsocketOrder {
+  _id: string;
+  status: "done" | "pending" | "created";
+  ingredients: Array<string>;
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+  name: string;
+}
+
+export interface IWebsocketOrderResponse {
+  success: boolean;
+  orders: Array<IWebsocketOrder>;
+  total: number;
+  totalToday: number;
+}

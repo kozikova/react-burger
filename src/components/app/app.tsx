@@ -13,10 +13,12 @@ import Register from "../../pages/Register/register";
 import ForgotPassword from "../../pages/ForgotPassword/forgot-password";
 import ResetPassword from "../../pages/ResetPassword/reset-password";
 import NotFound from "../../pages/NotFound/not-found";
+import Feed from "../../pages/NotFound/not-found";
 import { ProfileOrders } from "../profile/profile-orders/profile-orders";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
 import { ProfileDetails } from "../profile/profile-details/profile-details";
 import { authUser } from "../../services/userData";
+import { OrderModal } from "../order/order-modal/order-modal";
 
 function App() {
   const appDispatch = useAppDispatch();
@@ -54,8 +56,14 @@ function App() {
             path="/profile/orders"
             element={<OnlyAuth component={<ProfileOrders />} />}
           />
+          <Route
+            path="/profile/orders/:number"
+            element={<OnlyAuth component={<OrderModal />} />}
+          />
         </Route>
         <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
+        <Route path="/feed" element={<Feed />} />
+        <Route path="/feed/:number" element={<OrderModal />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 
@@ -66,6 +74,22 @@ function App() {
             element={
               <Modal title="Детали ингредиента" onClose={onItemClose}>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path="/feed/:number"
+            element={
+              <Modal onClose={onItemClose}>
+                <OrderModal />
+              </Modal>
+            }
+          />
+          <Route
+            path="/profile/orders/:number"
+            element={
+              <Modal onClose={onItemClose}>
+                <OnlyAuth component={<OrderModal />} />
               </Modal>
             }
           />

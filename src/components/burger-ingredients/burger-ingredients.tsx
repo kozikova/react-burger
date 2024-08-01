@@ -1,7 +1,5 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import IngredientGroup from "./ingredient-group/ingredient-group";
 import { IIngredientType } from "../../utils/types";

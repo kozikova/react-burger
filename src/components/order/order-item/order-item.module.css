@@ -1,0 +1,93 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;    
+  align-items: flex-start;
+  gap: 24px;
+}
+
+  .link:hover,
+  .link:active,
+  .link:focus {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .numberWrapper {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 25px;
+    margin-top: 8px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 875px;
+    border-radius: 40px;
+    background: #2f2f37;
+    margin-right: 8px;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .title {
+    composes: text text_type_main-medium from global;
+    max-width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 25px;
+  }
+
+  .numberTitle {
+    composes: text text_type_digits-default from global;
+  }
+  
+  .orderInfo {   
+    display: flex;
+    align-items: center;    
+    justify-content: space-between;
+    gap: 24px;
+
+    margin-left: 25px;
+    margin-bottom: 8px;
+    width: 95%;
+  }
+  
+  .status {
+    composes: text text_type_main-default ml-6 from global;    
+  }
+
+  .orderIcons {
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    background: var(--interface-bg);
+    border: 2px solid purple;
+  }
+  
+  .iconImage {
+    position: absolute;
+    height: 95%;
+  }
+  
+  .numberIcon {
+    composes: icon;
+    margin-left: calc(-15px * 5);
+  }
+
+  .price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
