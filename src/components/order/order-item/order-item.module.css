@@ -21,7 +21,7 @@
     margin-top: 8px;
   }
 
-  .container {
+  .orderItemContainer {
     width: 100%;
     max-width: 875px;
     border-radius: 40px;
@@ -92,12 +92,12 @@
     gap: 8px;
   }
 
-a,
-a:link,
-a:visited,
-a:focus,
-a:hover,
-a:active {
+  .orderItemContainer > a,
+ .orderItemContainer > a:link,
+  .orderItemContainer > a:visited,
+  .orderItemContainer > a:focus,
+  .orderItemContainer > a:hover,
+  .orderItemContainer > a:active {
   text-decoration: none;
   cursor: pointer;
   color: inherit;  
