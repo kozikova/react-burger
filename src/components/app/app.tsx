@@ -13,7 +13,7 @@ import Register from "../../pages/Register/register";
 import ForgotPassword from "../../pages/ForgotPassword/forgot-password";
 import ResetPassword from "../../pages/ResetPassword/reset-password";
 import NotFound from "../../pages/NotFound/not-found";
-import Feed from "../../pages/NotFound/not-found";
+import { Feed } from "../../pages/Feed/feed";
 import { ProfileOrders } from "../profile/profile-orders/profile-orders";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
 import { ProfileDetails } from "../profile/profile-details/profile-details";
@@ -55,15 +55,14 @@ function App() {
           <Route
             path="/profile/orders"
             element={<OnlyAuth component={<ProfileOrders />} />}
-          />
-          <Route
-            path="/profile/orders/:number"
-            element={<OnlyAuth component={<OrderModal />} />}
-          />
+          />          
         </Route>
         <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
-        <Route path="/feed" element={<Feed />} />
-        <Route path="/feed/:number" element={<OrderModal />} />
+        <Route path="/profile/orders/:number" element={<OnlyAuth component={<OrderModal />} />} />
+        <Route path="/feed">
+          <Route index element={<Feed />} />
+          <Route path="/feed/:number" element={<OrderModal />} />
+        </Route>        
         <Route path="*" element={<NotFound />} />
       </Routes>
 

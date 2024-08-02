@@ -33,24 +33,35 @@ export const OrderModal: FC = () => {
   );
 
   useEffect(() => {
-    if (match.includes("profile")) {
+   if (match.includes("profile")) {
       const rawToken = localStorage.getItem("accessToken");
       const token = rawToken!.split(" ")[1];
-      dispatch(wsConnect(`${webSocketApi}/orders?token=${token}`));
+      dispatch(wsConnect(`${webSocketApi}/orders?token=${token}`));     
+    }
+    if (match.includes("feed")) {
+      dispatch(wsConnect(`${webSocketApi}/orders/all`));
+     
+    }
+    return () => {
+      dispatch(wsDisconnect());
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (match.includes("profile")) {  
       setCurrentOrder(
         profileOrders ? profileOrders.find((item) => item._id === number) : undefined
       );
     }
     if (match.includes("feed")) {
-      dispatch(wsConnect(`${webSocketApi}/orders/all}`));
+     
       setCurrentOrder(
         feedOrders ? feedOrders.find((item) => item._id === number) : undefined
       );
-    }
-    return () => {
-      dispatch(wsDisconnect());
-    };
-  }, [dispatch, feedOrders, match, number, profileOrders]);
+  }
+   
+  }, [feedOrders, match, number, profileOrders]);
+  
 
   useEffect(() => {
     if (currentOrder) return;
@@ -98,8 +109,8 @@ export const OrderModal: FC = () => {
 
   return (
     <div className={orderModalStyles.wrapper}>
-      <div className={orderModalStyles.header}>
-        <p className="text text_type_digits-default">{`#${currentOrder.number}`}</p>
+      <p className="text text_type_digits-default">{`#${currentOrder.number}`}</p>
+      <div className={orderModalStyles.header}>        
         <p className="text text_type_main-medium">{currentOrder.name}</p>
         <p
           className={`${

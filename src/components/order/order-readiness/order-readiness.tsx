@@ -31,7 +31,7 @@ export const OrderReadiness = () => {
             {readyOrders.slice(0, 10).map((orderNumber, index) => (
               <span
                 className="text text_type_main-medium"
-                style={{ color: `#00cccc;` }}
+                style={{ color: `#00cccc` }}
                 key={index}
               >
                 {orderNumber}
