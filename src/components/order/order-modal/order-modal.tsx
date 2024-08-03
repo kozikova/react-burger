@@ -47,16 +47,16 @@ export const OrderModal: FC = () => {
     };
   }, [dispatch]);
 
-  useEffect(() => {
+   useEffect(() => {
     if (match.includes("profile")) {  
       setCurrentOrder(
-        profileOrders ? profileOrders.find((item) => item._id === number) : undefined
+        profileOrders ? profileOrders.find((item) => item.number.toString() === number) : undefined
       );
     }
     if (match.includes("feed")) {
      
       setCurrentOrder(
-        feedOrders ? feedOrders.find((item) => item._id === number) : undefined
+        feedOrders ? feedOrders.find((item) => item.number.toString() === number) : undefined
       );
   }
    
