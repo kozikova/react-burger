@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import styles from "./profile-menu.module.css";
-import { useDispatch } from "react-redux";
 import { logoutAction } from "../../../services/userData";
 import { useNavigate } from "react-router-dom";
 import useAppDispatch from "../../../hooks/useAppDispatch";
