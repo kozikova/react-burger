@@ -34,8 +34,8 @@ export const OrderItem: FC<TOrderItemProps> = ({ order, fromProfile }) => {
 
   return (
     <li className={orderItemStyles.orderItemContainer}>
-      <Link
-        to={order._id}
+     <Link
+        to={order.number.toString()}
         state={{ background: location, totalPrice: totalPrice }}
         className={orderItemStyles.link}
       >
