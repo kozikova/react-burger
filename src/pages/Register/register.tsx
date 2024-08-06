@@ -8,7 +8,6 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./register.module.css";
 import { registerAction } from "../../services/userData";
-import { useDispatch, useSelector } from "react-redux";
 import useAppDispatch from "../../hooks/useAppDispatch";
 
 const Register: FC = () => {

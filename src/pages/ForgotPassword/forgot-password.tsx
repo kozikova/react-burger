@@ -1,7 +1,6 @@
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
 import React, { ChangeEvent, FC, FormEvent, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import styles from "./forgot-password.module.css";
 import { passwordResetAction } from "../../services/userData";
 import useAppDispatch from "../../hooks/useAppDispatch";

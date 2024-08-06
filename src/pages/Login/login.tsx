@@ -6,7 +6,6 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import styles from "./login.module.css";
 import { loginAction } from "../../services/userData";
 import useAppDispatch from "../../hooks/useAppDispatch";

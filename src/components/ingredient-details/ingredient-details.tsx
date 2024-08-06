@@ -1,6 +1,5 @@
 import ingredientStyles from "./ingredient-details.module.css";
 import { FC, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { open, close } from "../../services/ingredientDetails";
 import { IIngredientType } from "../../utils/types";

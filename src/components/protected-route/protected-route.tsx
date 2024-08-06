@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router";
 import { FC, ReactElement } from "react";
 import useAppSelector from "../../hooks/useAppSelector";
