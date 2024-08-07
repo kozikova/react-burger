@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
 import styles from "./profile-menu.module.css";
-import { useDispatch } from "react-redux";
 import { logoutAction } from "../../../services/userData";
 import { useNavigate } from "react-router-dom";
+import useAppDispatch from "../../../hooks/useAppDispatch";
 
 export function ProfileMenu() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onLogout = () => {
@@ -21,11 +21,7 @@ export function ProfileMenu() {
         end
       >
         {({ isActive }) => (
-          <span
-            className={({ isActive }) =>
-              `${styles.link} ${isActive ? styles.active : ""}`
-            }
-          >
+          <span className={`${styles.link} ${isActive ? styles.active : ""}`}>
             Профиль
           </span>
         )}
@@ -36,11 +32,7 @@ export function ProfileMenu() {
         end
       >
         {({ isActive }) => (
-          <span
-            className={({ isActive }) =>
-              `${styles.link} ${isActive ? styles.active : ""}`
-            }
-          >
+          <span className={`${styles.link} ${isActive ? styles.active : ""}`}>
             История заказов
           </span>
         )}

@@ -6,10 +6,10 @@ import {
 import { IIngredientType, IIngredientTypeWithKey } from "../../../utils/types";
 import { useDrag, useDrop } from "react-dnd";
 import React, { FC, useRef } from "react";
-import { useDispatch } from "react-redux";
 import { setNewPosition } from "../../../services/burgerConstructor";
 import { v4 as uuidv4 } from "uuid";
 import { Identifier } from "dnd-core";
+import useAppDispatch from "../../../hooks/useAppDispatch";
 
 type TElementCustomProps = {
   bun: IIngredientType | null;
@@ -42,7 +42,7 @@ export const ElementCustom: FC<TElementCustomProps> = ({
   index,
 }) => {
   const ref = useRef<HTMLLIElement | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [{ handlerId }, drop] = useDrop<TDragObject, unknown, TDropCollectedProps>({
     accept: "sortable",

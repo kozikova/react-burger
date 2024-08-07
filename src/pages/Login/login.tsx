@@ -6,9 +6,9 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import styles from "./login.module.css";
 import { loginAction } from "../../services/userData";
+import useAppDispatch from "../../hooks/useAppDispatch";
 
 const Login: FC = () => {
   const [email, setEmail] = React.useState("");
@@ -17,7 +17,7 @@ const Login: FC = () => {
   const location = useLocation();
   const state = location.state;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
@@ -29,7 +29,7 @@ const Login: FC = () => {
   const onSubmitLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //на следующем спринте
-    //@ts-ignore
+
     dispatch(loginAction({ email, password }));
     navigate(state ? state.from : "/");
   };

@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
+import { IIngredientType } from "../utils/types";
 
-const initialState = {
+type TInitialState = {
+  info: IIngredientType | null;
+};
+
+const initialState: TInitialState = {
   info: null,
 };
 

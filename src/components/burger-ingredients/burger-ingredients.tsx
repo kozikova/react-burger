@@ -1,15 +1,12 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import IngredientGroup from "./ingredient-group/ingredient-group";
 import { IIngredientType } from "../../utils/types";
+import useAppSelector from "../../hooks/useAppSelector";
 
 export const BurgerIngredients: FC = () => {
-  //на следующем спринте
-  //@ts-ignore
-  const ingredients = useSelector((store) => store.ingredients.ingredients);
+  const ingredients = useAppSelector((store) => store.ingredients.ingredients);
 
   const [current, setCurrent] = React.useState("bun");
 

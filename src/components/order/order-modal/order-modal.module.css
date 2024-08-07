@@ -1,0 +1,68 @@
+.wrapper {
+    height: 560px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    max-width: fit-content;    
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .header {    
+    margin-top: 10px;
+    margin-bottom: 3px;
+  }
+
+  .done {
+    color: #00cccc;
+  }
+  
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+    width: 100%;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: flex-start;
+    max-height: 250px;
+    overflow-y: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 15px;
+  }
+
+  .item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    text-align: left;
+  }
+
+  .priceContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;   
+    gap: 8px;
+  }
+  
+  .price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  
+  
+  
+  
+  
+  
+  

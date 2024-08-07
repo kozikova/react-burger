@@ -1,6 +1,5 @@
 import React, { FC } from "react";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
@@ -17,13 +16,9 @@ import { postOrder } from "../../services/orderDetails";
 import { ElementCustom } from "./element-custom/element-custom";
 import { useDrop } from "react-dnd";
 import { useNavigate } from "react-router";
-import { IIngredientTypeWithKey } from "../../utils/types";
-
-type TDragObject = {
-  key: string;
-  index: number;
-  type: "bun" | "main" | "sauce";
-};
+import { IIngredientType, IIngredientTypeWithKey } from "../../utils/types";
+import useAppDispatch from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 type TDropCollectedProps = {
   isOver: boolean;
@@ -31,38 +26,34 @@ type TDropCollectedProps = {
 
 const BurgerConstructor: FC = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  //на следующем спринте
-  //@ts-ignore
-  const bun = useSelector((store) => store.burgerConstructor.bun);
-  //@ts-ignore
-  const items = useSelector((store) => store.burgerConstructor.items);
-  //@ts-ignore
-  const { loading, error, orderFromApi } = useSelector((store) => store.orderDetails);
-  //@ts-ignore
-  const user = useSelector((store) => store.userData.user);
+  const bun = useAppSelector((store) => store.burgerConstructor.bun);
+
+  const items = useAppSelector((store) => store.burgerConstructor.items);
+
+  const { loading, error, orderFromApi } = useAppSelector((store) => store.orderDetails);
+
+  const user = useAppSelector((store) => store.userData.user);
 
   useEffect(() => {
-    //на следующем спринте
-    //@ts-ignore
     dispatch(total());
   }, [dispatch, bun, items]);
 
-  //на следующем спринте
-  //@ts-ignore
-  const getNewTotal = useSelector((store) => store.burgerConstructor.totalPrice);
+  const getNewTotal = useAppSelector((store) => store.burgerConstructor.totalPrice);
 
-  const [, dropTargetRef] = useDrop<TDragObject, unknown, TDropCollectedProps>({
-    accept: "dndContainer",
-    drop: (item) => dropDispachActions(item),
-    collect(monitor) {
-      return { isOver: monitor.isOver() };
-    },
-  });
+  const [, dropTargetRef] = useDrop<IIngredientTypeWithKey, unknown, TDropCollectedProps>(
+    {
+      accept: "dndContainer",
+      drop: (item) => dropDispachActions(item),
+      collect(monitor) {
+        return { isOver: monitor.isOver() };
+      },
+    }
+  );
 
-  const dropDispachActions = (item: TDragObject) => {
+  const dropDispachActions = (item: IIngredientTypeWithKey) => {
     if (item.type === "bun") {
       dispatch(addBun(item));
     } else {
@@ -76,9 +67,9 @@ const BurgerConstructor: FC = () => {
 
   const postAndOpenOrder = () => {
     if (user) {
-      //на следующем спринте
-      //@ts-ignore
-      dispatch(postOrder([bun._id, ...items.map((item) => item._id), bun?._id]));
+      dispatch(
+        postOrder([bun!._id, ...items.map((item: IIngredientType) => item._id), bun!._id])
+      );
       openModal();
     } else {
       navigate("/login");
@@ -86,8 +77,6 @@ const BurgerConstructor: FC = () => {
   };
 
   const closeAndClearOrder = () => {
-    //на следующем спринте
-    //@ts-ignore
     dispatch(clear());
     closeModal();
   };
@@ -151,7 +140,7 @@ const BurgerConstructor: FC = () => {
             <div>
               {loading && "Загрузка..."}
               {!loading && error && <p>Ошибка: {error}</p>}
-              {!loading && !error && orderFromApi.success && <OrderDetails />}
+              {!loading && !error && orderFromApi!.success && <OrderDetails />}
             </div>
           </Modal>
         )}

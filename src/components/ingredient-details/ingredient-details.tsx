@@ -1,15 +1,14 @@
 import ingredientStyles from "./ingredient-details.module.css";
 import { FC, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { open, close } from "../../services/ingredientDetails";
 import { IIngredientType } from "../../utils/types";
+import useAppDispatch from "../../hooks/useAppDispatch";
+import useAppSelector from "../../hooks/useAppSelector";
 
 export const IngredientDetails: FC = () => {
-  const dispatch = useDispatch();
-  //на следующем спринте
-  //@ts-ignore
-  const ingredients = useSelector((store) => store.ingredients.ingredients);
+  const dispatch = useAppDispatch();
+  const ingredients = useAppSelector((store) => store.ingredients.ingredients);
   const { ingredientId } = useParams();
   useEffect(() => {
     const ingredient = ingredients.find(
@@ -21,9 +20,7 @@ export const IngredientDetails: FC = () => {
     }
   }, [dispatch, ingredients, ingredientId]);
 
-  //на следующем спринте
-  //@ts-ignore
-  const info = useSelector((store) => store.ingredientDetails.info);
+  const info = useAppSelector((store) => store.ingredientDetails.info);
 
   return (
     <div className={ingredientStyles.ingredient_details_wrapper}>
