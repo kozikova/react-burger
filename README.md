@@ -1,3 +1,6 @@
+My First React App deployed on Yandex Cloud domain
+https://starreact.students.nomorepartiesco.ru/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

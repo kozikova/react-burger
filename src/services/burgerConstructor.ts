@@ -9,7 +9,7 @@ type TInitialState = {
   totalPrice: number;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   items: [],
   bun: null,
   totalPrice: 0,
@@ -75,7 +75,6 @@ export const getIngredientCounts = createSelector(
       ...items.map((item: IIngredientType) => item._id),
       bun?._id,
     ];
-    console.log("selector");
     return ingredients.reduce(
       (accumulator: ICountObject, currentValue: IIngredientType) => {
         return {

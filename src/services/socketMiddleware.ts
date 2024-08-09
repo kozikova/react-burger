@@ -3,7 +3,7 @@ import {
   ActionCreatorWithPayload,
   Middleware,
 } from "@reduxjs/toolkit";
-import { RootReducer, RootState } from "./store";
+import { RootReducer } from "./store";
 
 export type TWSActionTypes = {
   connect: ActionCreatorWithPayload<string>;
