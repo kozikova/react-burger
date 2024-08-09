@@ -14,7 +14,7 @@ export const IngredientGroup: FC<TIngredientGroupProps> = (props) => {
 
   return (
     <div className={groupStyles.layout}>
-      <ul className={groupStyles.ingredients_grid}>
+      <ul className={groupStyles.ingredients_grid} data-test="ingredient-group">
         {props.list.map((item) => (
           <IngredientItem info={item} key={item._id} count={countObject[item._id]} />
         ))}
