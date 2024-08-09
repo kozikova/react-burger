@@ -1,8 +1,14 @@
-const BASE_URL = "http://localhost:3000";
+const GROUP_SELECTOR = "[data-test^=ingredient-group]";
+const DRAG_SELECTOR = "[data-test^=ingredient-drag]";
+const DROP_SELECTOR = "[data-test=bun-drop]";
+const MODAL_SELECTOR = "[data-test^=modal]";
+const CLOSE_SELECTOR = "[data-test^=close]";
+const OVERLAY_SELECTOR = "[data-test^=overlay]";
+const MODAL_TITLE = "Детали ингредиента";
 
 describe("Burger Constructor", () => {
   beforeEach(() => {
-    cy.visit(BASE_URL);
+    cy.visit("");
     cy.contains("Соберите бургер");
   });
 
@@ -10,48 +16,32 @@ describe("Burger Constructor", () => {
     cy.contains("Выберите булку");
     cy.contains("Выберите начинку");
 
-    cy.get("[data-test^=ingredient-group]")
+    cy.get(GROUP_SELECTOR)
       .eq(0)
-      .find("[data-test^=ingredient-drag]")
+      .find(DRAG_SELECTOR)
       .first()
       .contains("Краторная булка N-200i")
       .trigger("dragstart");
 
-    cy.get('[data-test="bun-drop"]').trigger("drop");
+    cy.get(DROP_SELECTOR).trigger("drop");
 
-    cy.get("[data-test^=ingredient-group]")
-      .eq(1)
-      .find("[data-test^=ingredient-drag]")
-      .first()
-      .trigger("dragstart");
-    cy.get('[data-test="bun-drop"]').first().trigger("drop");
-    cy.get("[data-test^=ingredient-group]")
-      .eq(2)
-      .find("[data-test^=ingredient-drag]")
-      .first()
-      .trigger("dragstart");
-    cy.get('[data-test="bun-drop"]').trigger("drop");
+    cy.get(GROUP_SELECTOR).eq(1).find(DRAG_SELECTOR).first().trigger("dragstart");
+    cy.get(DROP_SELECTOR).first().trigger("drop");
+    cy.get(GROUP_SELECTOR).eq(2).find(DRAG_SELECTOR).first().trigger("dragstart");
+    cy.get(DROP_SELECTOR).trigger("drop");
   });
 
   it("open close ingredientDetails", () => {
-    cy.get("[data-test^=ingredient-group]")
-      .eq(0)
-      .find("[data-test^=ingredient-drag]")
-      .first()
-      .click();
-    cy.get("[data-test^=modal]").should("be.visible").contains("Детали ингредиента");
+    cy.get(GROUP_SELECTOR).eq(0).find(DRAG_SELECTOR).first().click();
+    cy.get(MODAL_SELECTOR).should("be.visible").contains(MODAL_TITLE);
 
-    cy.get("[data-test^=close]").click();
-    cy.get("[data-test^=modal]").should("not.exist");
+    cy.get(CLOSE_SELECTOR).click();
+    cy.get(MODAL_SELECTOR).should("not.exist");
 
-    cy.get("[data-test^=ingredient-group]")
-      .eq(0)
-      .find("[data-test^=ingredient-drag]")
-      .first()
-      .click();
-    cy.get("[data-test^=modal]").should("be.visible").contains("Детали ингредиента");
+    cy.get(GROUP_SELECTOR).eq(0).find(DRAG_SELECTOR).first().click();
+    cy.get(MODAL_SELECTOR).should("be.visible").contains(MODAL_TITLE);
 
-    cy.get("[data-test^=overlay]").click({ force: true });
-    cy.get("[data-test^=modal]").should("not.exist");
+    cy.get(OVERLAY_SELECTOR).click({ force: true });
+    cy.get(MODAL_SELECTOR).should("not.exist");
   });
 });
