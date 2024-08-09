@@ -33,6 +33,7 @@ export const IngredientItem: FC<TIngredientItemProps> = (props) => {
     <li className={itemStyles.cart}>
       {props.count > 0 ? <Counter count={props.count} size="small" /> : ""}
       <Link
+        data-test={`ingredient-drag-${ingredientId}`}
         key={ingredientId}
         // Тут мы формируем динамический путь для нашего ингредиента
         to={`/ingredients/${ingredientId}`}

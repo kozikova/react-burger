@@ -29,10 +29,14 @@ const Modal: FC<PropsWithChildren<ModalProps>> = (props) => {
 
   return ReactDOM.createPortal(
     <>
-      <div className={modalStyles.modal}>
+      <div className={modalStyles.modal} data-test="modal">
         <div className={modalStyles.title_wrapper}>
           <p className="text_type_main-large">{props.title}</p>
-          <button className={modalStyles.close_button} onClick={props.onClose}>
+          <button
+            className={modalStyles.close_button}
+            onClick={props.onClose}
+            data-test="close"
+          >
             <CloseIcon type={"primary"} />
           </button>
         </div>

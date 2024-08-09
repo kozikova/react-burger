@@ -28,7 +28,7 @@ function App() {
 
   React.useEffect(() => {
     appDispatch(getIngredients());
-    appDispatch(authUser());
+    // appDispatch(authUser());
   }, [appDispatch]);
 
   const onItemClose = () => {
@@ -55,14 +55,17 @@ function App() {
           <Route
             path="/profile/orders"
             element={<OnlyAuth component={<ProfileOrders />} />}
-          />          
+          />
         </Route>
         <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
-        <Route path="/profile/orders/:number" element={<OnlyAuth component={<OrderModal />} />} />
+        <Route
+          path="/profile/orders/:number"
+          element={<OnlyAuth component={<OrderModal />} />}
+        />
         <Route path="/feed">
           <Route index element={<Feed />} />
           <Route path="/feed/:number" element={<OrderModal />} />
-        </Route>        
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
 

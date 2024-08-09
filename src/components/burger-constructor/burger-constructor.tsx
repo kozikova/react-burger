@@ -46,6 +46,7 @@ const BurgerConstructor: FC = () => {
   const [, dropTargetRef] = useDrop<IIngredientTypeWithKey, unknown, TDropCollectedProps>(
     {
       accept: "dndContainer",
+
       drop: (item) => dropDispachActions(item),
       collect(monitor) {
         return { isOver: monitor.isOver() };
@@ -83,7 +84,11 @@ const BurgerConstructor: FC = () => {
 
   return (
     <div className={constructorStyles.layout}>
-      <ul ref={dropTargetRef} className={constructorStyles.without_padding}>
+      <ul
+        ref={dropTargetRef}
+        className={constructorStyles.without_padding}
+        data-test="bun-drop"
+      >
         <ElementCustom
           bun={bun}
           item={null}
