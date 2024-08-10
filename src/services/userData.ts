@@ -22,7 +22,7 @@ type TInitialState = {
   message: string | null;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   user: null,
   isAuthChecked: false,
   loading: false,

@@ -1,9 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  WebsocketStatus,
-  IWebsocketOrder,
-  IWebsocketOrderResponse,
-} from "../utils/types";
+import { WebsocketStatus, IWebsocketOrderResponse } from "../utils/types";
 
 type TInitialState = {
   websocketOrderResponse: IWebsocketOrderResponse | null;
@@ -11,7 +7,7 @@ type TInitialState = {
   connectionError: string | null;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   websocketOrderResponse: null,
   status: WebsocketStatus.OFFLINE,
   connectionError: null,

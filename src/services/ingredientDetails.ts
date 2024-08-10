@@ -6,7 +6,7 @@ type TInitialState = {
   info: IIngredientType | null;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   info: null,
 };
 

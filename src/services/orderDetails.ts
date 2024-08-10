@@ -7,7 +7,7 @@ type TInitialState = {
   error: string | null;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   orderFromApi: null,
   loading: false,
   error: null,

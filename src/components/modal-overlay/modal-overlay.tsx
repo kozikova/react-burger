@@ -11,6 +11,7 @@ const ModalOverlay: React.FC<ModalOverlayProps> = (props) => {
       id="closeLayout"
       onClick={props.closeModal}
       className={modalOverlayStyles.half_transparent_overlay}
+      data-test="overlay"
     />
   );
 };
